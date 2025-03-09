@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
-import '../ui/model/direction.dart';
-import '../ui/model/maze.dart';
+import '../model/direction.dart';
+import '../model/maze.dart';
 
 
 class MazeViewModel extends ChangeNotifier {

@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:quizmaze/game/ui/model/wall.dart';
+
+import 'package:quizmaze/game/ui/maze/model/wall.dart';
 
 import 'maze_cell.dart';
 
