@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizmaze/game/ui/flashcard/viewmodel/quiz_view_model.dart';
+import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
 import 'package:quizmaze/game/ui/flashcard/widgets/flash_card_view.dart';
 
 import '../common/widgets/game_header.dart';
@@ -10,7 +9,7 @@ import '../common/widgets/navigation_button.dart';
 class QuizPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<QuizViewModel>();
+    var appState = context.watch<GameViewModel>();
     var currentFlashCard = appState.currentFlashCard;
 
     return Scaffold(

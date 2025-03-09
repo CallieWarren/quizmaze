@@ -1,58 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-import '../../flashcard/model/flash_card.dart';
-import '../../flashcard/viewmodel/quiz_view_model.dart';
+
+import '../model/maze.dart';
 
 class MazeView extends StatelessWidget {
-  const MazeView({super.key, required this.currentFlashCard});
-
-  final FlashCard currentFlashCard;
+  const MazeView({super.key, required this.maze});
+  final Maze maze;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final flashcardStyle = theme.textTheme.displayMedium!.copyWith(
-      color: Color.fromARGB(255, 47, 48, 44),
+
+    return TableView.builder(
+      cellBuilder: _buildCell,
+      columnCount: maze.maxRowColumnCount,
+      columnBuilder: (index) => _buildSpan(context, index),
+      rowCount: maze.maxRowColumnCount,
+      rowBuilder: (index) => _buildSpan(context, index),
     );
-    var appState = context.watch<QuizViewModel>();
+  }
 
-    String flashCardText;
-    if (currentFlashCard.isQuestionSide) {
-      flashCardText = "Question ${currentFlashCard.count}";
-    } else {
-      flashCardText = "Answer ${currentFlashCard.count}";
-    }
+  TableViewCell _buildCell(BuildContext context, TableVicinity vicinity) {
+    // final location = Location.at(vicinity.column, vicinity.row);
 
-    return SizedBox(
-      height: double.infinity,
-      child: Card(
-        color: Color.fromARGB(255, 255, 255, 230),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: BorderSide(
-            color: Color.fromARGB(255, 7, 7, 7), // Black border color
-            width: 1.0, // Border width
-          ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(8.0),
-          onTap: () {
-            appState.getNextSide();
-          },
-          child: Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(20),
-            child: Center(
-              child: Text(
-                flashCardText,
-                style: flashcardStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
+    return TableViewCell(
+      child: Consumer(
+        builder: (context, ref, _) {
+          // final character = ref.watch(
+          //   crosswordProvider.select(
+          //         (crosswordAsync) => crosswordAsync.when(
+          //       data: (crossword) => crossword.characters[location],
+          //       error: (error, stackTrace) => null,
+          //       loading: () => null,
+          //     ),
+          //   ),
+          // );
+          //
+          // if (character != null) {
+          //   return Container(
+          //     color: Theme.of(context).colorScheme.onPrimary,
+          //     child: Center(
+          //       child: Text(
+          //         character.character,
+          //         style: TextStyle(
+          //           fontSize: 24,
+          //           color: Theme.of(context).colorScheme.primary,
+          //         ),
+          //       ),
+          //     ),
+          //   );
+          // }
+
+          return ColoredBox(
+            color: Theme.of(context).colorScheme.primaryContainer,
+          );
+        },
+      ),
+    );
+  }
+
+  TableSpan _buildSpan(BuildContext context, int index) {
+    return TableSpan(
+      extent: FixedTableSpanExtent(75),
+      foregroundDecoration: TableSpanDecoration(
+        border: TableSpanBorder(
+          leading: BorderSide(
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
+          trailing: BorderSide(
+              color: Theme.of(context).colorScheme.onPrimaryContainer),
         ),
       ),
     );
   }
+
 }

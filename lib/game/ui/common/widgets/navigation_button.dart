@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../maze/widgets/maze_page.dart';
+import '../../maze/maze_page.dart';
 
 class NavigationButton extends StatelessWidget {
   @override

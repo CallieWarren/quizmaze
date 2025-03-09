@@ -2,19 +2,37 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
-import '../model/direction.dart';
-import '../model/maze.dart';
+import '../../flashcard/model/flash_card.dart';
+import '../../maze/model/direction.dart';
+import '../../maze/model/maze.dart';
 
 
-class MazeViewModel extends ChangeNotifier {
+class GameViewModel extends ChangeNotifier {
     var maze = Maze();
     var currentX = 0;
     var currentY = 0;
     var exit = Point(3, 3);
 
+    var currentFlashCard = FlashCard();
+    var correct = 0;
+    var total = 0;
+
+    void getNextQuestion(bool isCorrect) {
+        if (isCorrect) {
+            correct++;
+        }
+        total++;
+        currentFlashCard.nextQuestion();
+        notifyListeners();
+    }
+
+    void getNextSide() {
+        currentFlashCard.nextSide();
+        notifyListeners();
+    }
+
     void initMaze() {
         maze.init();
-        notifyListeners();
     }
 
 

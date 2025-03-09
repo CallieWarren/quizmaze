@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
 
-import '../flashcard_quiz.dart';
 import '../model/flash_card.dart';
-import '../viewmodel/quiz_view_model.dart';
 
 class FlashcardView extends StatelessWidget {
   const FlashcardView({super.key, required this.currentFlashCard});
@@ -17,7 +15,7 @@ class FlashcardView extends StatelessWidget {
     final flashcardStyle = theme.textTheme.displayMedium!.copyWith(
       color: Color.fromARGB(255, 47, 48, 44),
     );
-    var appState = context.watch<QuizViewModel>();
+    var appState = context.watch<GameViewModel>();
 
     String flashCardText;
     if (currentFlashCard.isQuestionSide) {

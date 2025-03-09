@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:quizmaze/game/ui/flashcard/flashcard_quiz.dart';
+import 'package:quizmaze/flashcard_quiz.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

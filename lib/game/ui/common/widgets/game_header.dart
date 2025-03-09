@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:quizmaze/game/ui/flashcard/viewmodel/quiz_view_model.dart';
 
-import '../../flashcard/flashcard_quiz.dart';
+import '../viewmodel/game_view_model.dart';
 
 class GameHeader extends StatelessWidget {
   const GameHeader({super.key, required this.isMazeView});
@@ -11,7 +10,7 @@ class GameHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<QuizViewModel>();
+    var appState = context.watch<GameViewModel>();
     String swipesText;
     if (isMazeView) {
       swipesText = 'Swipes Remaining :\n${appState.correct}';
