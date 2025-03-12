@@ -1,13 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 
 import '../model/maze.dart';
+import '../model/maze_cell.dart';
 
 class MazeView extends StatelessWidget {
-  const MazeView({super.key, required this.maze});
+  const MazeView({super.key, required this.maze, required this.currentX, required this.currentY, required this.exit});
   final Maze maze;
+  final int currentX;
+  final int currentY;
+  final Point exit;
+  final double borderThick = 7.0;
+  final double borderThin = 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -15,63 +23,144 @@ class MazeView extends StatelessWidget {
     return TableView.builder(
       cellBuilder: _buildCell,
       columnCount: maze.maxRowColumnCount,
-      columnBuilder: (index) => _buildSpan(context, index),
+      columnBuilder: (index) => _rowBuildSpan(context, index),
       rowCount: maze.maxRowColumnCount,
-      rowBuilder: (index) => _buildSpan(context, index),
+      rowBuilder: (index) => _columnBuildSpan(context, index),
     );
   }
 
   TableViewCell _buildCell(BuildContext context, TableVicinity vicinity) {
-    // final location = Location.at(vicinity.column, vicinity.row);
+
+    MazeCell currentCell = maze.cells.elementAt(vicinity.row).elementAt(vicinity.column);
+    double leftBorder =  borderThin;
+    double rightBorder = borderThin;
+    double topBorder = borderThin;
+    double bottomBorder = borderThin;
+
+    // todo and is visited check, for now just show all walls
+    if(currentCell.isWallRight) {
+      rightBorder = borderThick;
+    }
+
+    if(currentCell.isWallBottom) {
+      bottomBorder = borderThick;
+    }
 
     return TableViewCell(
       child: Consumer(
         builder: (context, ref, _) {
-          // final character = ref.watch(
-          //   crosswordProvider.select(
-          //         (crosswordAsync) => crosswordAsync.when(
-          //       data: (crossword) => crossword.characters[location],
-          //       error: (error, stackTrace) => null,
-          //       loading: () => null,
-          //     ),
-          //   ),
-          // );
-          //
-          // if (character != null) {
-          //   return Container(
-          //     color: Theme.of(context).colorScheme.onPrimary,
-          //     child: Center(
-          //       child: Text(
-          //         character.character,
-          //         style: TextStyle(
-          //           fontSize: 24,
-          //           color: Theme.of(context).colorScheme.primary,
-          //         ),
-          //       ),
-          //     ),
-          //   );
-          // }
+          if (vicinity.column == currentX && vicinity.row == currentY) {
+            return Container(
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 129, 28),
+                    border: Border(
+                    left: BorderSide(
+                      color: Colors.black,
+                      width: leftBorder
+                    ),
+                    right: BorderSide(
+                      color: Colors.black,
+                      width: rightBorder
+                    ),
+                    top: BorderSide(
+                      color: Colors.black,
+                      width: topBorder
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black,
+                      width: bottomBorder
+                    )
+                  )
+                ),
+                child: Center(
+                  child: Text(
+                    "x",
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.black
+                    ),
+                  ),
+                ),
+            );
+          }
 
-          return ColoredBox(
-            color: Theme.of(context).colorScheme.primaryContainer,
+          return Container(
+            decoration: BoxDecoration(
+                color:  Color.fromARGB(255, 255, 255, 230),
+                border: Border(
+                    left: BorderSide(
+                        color: Colors.black,
+                        width: leftBorder
+                    ),
+                    right: BorderSide(
+                        color: Colors.black,
+                        width: rightBorder
+                    ),
+                    top: BorderSide(
+                        color: Colors.black,
+                        width: topBorder
+                    ),
+                    bottom: BorderSide(
+                        color: Colors.black,
+                        width: bottomBorder
+                    )
+                )
+            ),
           );
         },
       ),
     );
   }
 
-  TableSpan _buildSpan(BuildContext context, int index) {
+  TableSpan _rowBuildSpan(BuildContext context, int index) {
+    double leadingBorderWidth = borderThin;
+    double trailingBorderWidth = borderThin;
+    if(index == 0) {
+      leadingBorderWidth = borderThick;
+    }
+    if(index == maze.maxRowColumnCount -1) {
+      trailingBorderWidth = borderThick;
+    }
     return TableSpan(
       extent: FixedTableSpanExtent(75),
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimaryContainer),
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              width: leadingBorderWidth
+          ),
           trailing: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimaryContainer),
-        ),
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              width: trailingBorderWidth
+          ),
+        )
       ),
     );
   }
 
+  TableSpan _columnBuildSpan(BuildContext context, int index) {
+    double leadingBorderWidth = borderThin;
+    double trailingBorderWidth = borderThin;
+    if(index == 0) {
+      leadingBorderWidth = borderThick;
+    }
+    if(index == maze.maxRowColumnCount -1) {
+      trailingBorderWidth = borderThick;
+    }
+    return TableSpan(
+      extent: FixedTableSpanExtent(75),
+      foregroundDecoration: TableSpanDecoration(
+        border: TableSpanBorder(
+          leading: BorderSide(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            width: leadingBorderWidth
+          ),
+          trailing: BorderSide(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            width: trailingBorderWidth
+          ),
+        ),
+      ),
+    );
+  }
 }

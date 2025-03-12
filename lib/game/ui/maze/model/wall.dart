@@ -1,9 +1,11 @@
 import 'dart:math';
 
 class Wall {
-  Point a;
-  Point b;
+  var i1;
+  var j1;
+  var i2;
+  var j2;
   var isRevealed = false;
 
-  Wall(this.a, this.b);
+  Wall(this.i1, this.j1, this.i2, this.j2);
 }

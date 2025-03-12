@@ -6,44 +6,76 @@ import 'package:quizmaze/game/ui/maze/model/wall.dart';
 import 'maze_cell.dart';
 
 class Maze {
-  var cells = List.filled(4, List.filled(4, MazeCell()));
-  var walls = [];
+  var cells = List<List<MazeCell>>.empty(growable: true);
+  var walls = List<Wall>.empty(growable: true);
   final maxRowColumnCount = 4;
 
   void init() {
     // todo random generate walls by level logic?
 
     // first row walls
-    walls.add(Wall(Point(1, 0), Point(2, 0)));
-    walls.add(Wall(Point(3, 0), Point(3, 1)));
+    walls.add(Wall(0, 1, 0, 2));
+    walls.add(Wall(0, 3, 1, 3));
     // second row walls
-    walls.add(Wall(Point(0, 1), Point(1, 1)));
-    walls.add(Wall(Point(1, 1), Point(1, 2)));
-    // third row walls
-    walls.add(Wall(Point(0, 2), Point(1, 2)));
-    walls.add(Wall(Point(1, 2), Point(1, 3)));
-    walls.add(Wall(Point(3, 2), Point(3, 3)));
-    // fourth row walls
-    walls.add(Wall(Point(1, 3), Point(2, 3)));
+    walls.add(Wall(1, 0, 1, 1));
+    walls.add(Wall(1, 1, 1, 2));
+    // // third row walls
+    walls.add(Wall(2, 0, 2, 1));
+    walls.add(Wall(2, 1, 3, 1));
+    walls.add(Wall(2, 2, 2, 3));
+    walls.add(Wall(2, 2, 3, 2));
+    // // fourth row walls
+    walls.add(Wall(3, 1, 3, 2));
 
     for(int i = 0; i < maxRowColumnCount; i++) {
+      var row = List<MazeCell>.empty(growable: true);
       for(int j = 0; j < maxRowColumnCount; j++) {
-        var currentCell = cells.elementAt(i).elementAt(j);
-        if(i > 0 && !walls.contains(Wall(Point(i, j), Point(i - 1, j)))) {
-          currentCell.neighbors.add(cells.elementAt(i - 1).elementAt(j));
+        var currentCell = MazeCell();
+        // if(j > 0 && isWallLeft(i, j)) {
+        //   // left
+        //   currentCell.isWallLeft = true;
+        // } else {
+        //   // currentCell.neighbors.add(cells.elementAt(i - 1).elementAt(j));
+        // }
+        if(j < (maxRowColumnCount -1) && isWallRight(i, j)) {
+          // right
+          currentCell.isWallRight = true;
+        } else {
+          // currentCell.neighbors.add(cells.elementAt(i + 1).elementAt(j));
         }
-        if(i < maxRowColumnCount -1 && !walls.contains(Wall(Point(i, j), Point(i + 1, j)))) {
-          currentCell.neighbors.add(cells.elementAt(i + 1).elementAt(j));
+        // if(j > 0 && !walls.contains(Wall(Point(i, j), Point(i, j - 1)))) {
+        //   // top
+        //   currentCell.neighbors.add(Point(i, j - 1));
+        // } else {
+        //   currentCell.isWallTop = true;
+        // }
+        if(i < maxRowColumnCount - 1 && isWallBottom(i, j)) {
+          currentCell.isWallBottom = true;
+          // currentCell.neighbors.add(Point(i, j + 1));
+        } else {
         }
-        if(j > 0 && !walls.contains(Wall(Point(i, j), Point(i, j - 1)))) {
-          currentCell.neighbors.add(Point(i, j - 1));
-        }
-        if(j < maxRowColumnCount - 1 && !walls.contains(Wall(Point(i, j), Point(i, j + 1)))) {
-          currentCell.neighbors.add(Point(i, j + 1));
-        }
+        row.add(currentCell);
       }
+      cells.add(row);
     }
   }
 
-  Maze();
+  // bool isWallLeft(int i, int j) {
+  //   return walls.any((wall) => wall.i1 == i && wall.lowerIndexCell.x == j
+  //       && wall.higherIndexCell.x == i && wall.higherIndexCell.y == j-1);
+  // }
+
+  bool isWallRight(int i, int j) {
+    return walls.any((wall) => wall.i1 == i && wall.j1 == j
+        && wall.i2 == i && wall.j2 == j+1);
+  }
+
+  bool isWallBottom(int i, int j) {
+    return walls.any((wall) => wall.i1 == i && wall.j1 == j && wall.i2 == i+1 && wall.j1 == j);
+  }
+
+
+  Maze(){
+    init();
+  }
 }

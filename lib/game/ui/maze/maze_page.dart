@@ -18,7 +18,7 @@ class MazePage extends StatelessWidget {
         child: Center(child: Column(
             children: [
               GameHeader(isMazeView: true),
-              MazeContainer(maze: mazeState.maze),
+              MazeContainer(maze: mazeState.maze, currentX: mazeState.currentX, currentY: mazeState.currentY, exit: mazeState.exit),
             ]
         )
         ),

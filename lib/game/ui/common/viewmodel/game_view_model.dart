@@ -31,11 +31,6 @@ class GameViewModel extends ChangeNotifier {
         notifyListeners();
     }
 
-    void initMaze() {
-        maze.init();
-    }
-
-
     void move(Direction direction) {
         bool foundExit = false;
         bool foundWall = false;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
 import 'package:quizmaze/game/ui/flashcard/quiz_page.dart';
-import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
 
 import 'game/ui/maze/maze_page.dart';
 
