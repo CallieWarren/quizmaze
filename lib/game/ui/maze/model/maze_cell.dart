@@ -5,13 +5,18 @@ class MazeCell {
   bool isWallLeft = false;
   bool isWallTop = false;
   bool isWallBottom = false;
-  var neighbors = [];
+  var neighbors = List<MazeCell>.empty(growable: true);
+
 
 
   void visit() {
     isVisited = true;
-    var neighborOptions = neighbors.takeWhile((element) => !(element as MazeCell).isVisited);
+    var neighborOptions = neighbors.takeWhile((element) => !(element).isVisited);
     isRevisitOption = neighborOptions.length > 1;
+  }
+
+  void addNeighbor(MazeCell neighbor) {
+    neighbors.add(neighbor);
   }
 
   MazeCell();

@@ -31,43 +31,61 @@ class Maze {
       var row = List<MazeCell>.empty(growable: true);
       for(int j = 0; j < maxRowColumnCount; j++) {
         var currentCell = MazeCell();
-        // if(j > 0 && isWallLeft(i, j)) {
-        //   // left
-        //   currentCell.isWallLeft = true;
-        // } else {
-        //   // currentCell.neighbors.add(cells.elementAt(i - 1).elementAt(j));
-        // }
+        if(j > 0 && isWallLeft(i, j)) {
+          // left
+          currentCell.isWallLeft = true;
+        }
         if(j < (maxRowColumnCount -1) && isWallRight(i, j)) {
           // right
           currentCell.isWallRight = true;
-        } else {
-          // currentCell.neighbors.add(cells.elementAt(i + 1).elementAt(j));
         }
-        // if(j > 0 && !walls.contains(Wall(Point(i, j), Point(i, j - 1)))) {
-        //   // top
-        //   currentCell.neighbors.add(Point(i, j - 1));
-        // } else {
-        //   currentCell.isWallTop = true;
-        // }
+        if(i > 0 && isWallTop(i, j)) {
+          // top
+          currentCell.isWallTop = true;
+        }
         if(i < maxRowColumnCount - 1 && isWallBottom(i, j)) {
+          // bottom
           currentCell.isWallBottom = true;
-          // currentCell.neighbors.add(Point(i, j + 1));
-        } else {
         }
         row.add(currentCell);
       }
       cells.add(row);
     }
+
+    for(int i = 0; i < maxRowColumnCount; i++) {
+      for(int j = 0; j < maxRowColumnCount; j++) {
+        var currentCell = cells.elementAt(i).elementAt(j);
+        if(j > 0 && !isWallLeft(i, j)) {
+          // left
+          currentCell.addNeighbor(cells.elementAt(i).elementAt(j-1));
+        }
+        if(j < (maxRowColumnCount -1) && !isWallRight(i, j)) {
+          // right
+          currentCell.addNeighbor(cells.elementAt(i).elementAt(j+1));
+        }
+        if(i > 0 && !isWallTop(i, j)) {
+          currentCell.addNeighbor(cells.elementAt(i-1).elementAt(j));
+        }
+        if(i < maxRowColumnCount - 1 && !isWallBottom(i, j)) {
+          currentCell.addNeighbor(cells.elementAt(i+1).elementAt(j));
+        }
+      }
+    }
   }
 
-  // bool isWallLeft(int i, int j) {
-  //   return walls.any((wall) => wall.i1 == i && wall.lowerIndexCell.x == j
-  //       && wall.higherIndexCell.x == i && wall.higherIndexCell.y == j-1);
-  // }
+
+  bool isWallLeft(int i, int j) {
+    return walls.any((wall) => wall.i2 == i && wall.j2 == j
+        && wall.i1 == i && wall.j1 == j-1);
+  }
 
   bool isWallRight(int i, int j) {
     return walls.any((wall) => wall.i1 == i && wall.j1 == j
         && wall.i2 == i && wall.j2 == j+1);
+  }
+
+  bool isWallTop(int i, int j) {
+    return walls.any((wall) => wall.i2 == i && wall.j2 == j && wall.i1 == i-1 && wall.j1 == j);
   }
 
   bool isWallBottom(int i, int j) {

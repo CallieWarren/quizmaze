@@ -4,22 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-
 import '../model/maze.dart';
 import '../model/maze_cell.dart';
 
 class MazeView extends StatelessWidget {
-  const MazeView({super.key, required this.maze, required this.currentX, required this.currentY, required this.exit});
+  const MazeView({
+    super.key,
+    required this.maze,
+    required this.currentX,
+    required this.currentY,
+    required this.exit,
+  });
+
   final Maze maze;
   final int currentX;
   final int currentY;
   final Point exit;
-  final double borderThick = 7.0;
+  final double borderWhole = 8.0;
+  final double borderHalf = 4.0;
   final double borderThin = 1.0;
 
   @override
   Widget build(BuildContext context) {
-
     return TableView.builder(
       cellBuilder: _buildCell,
       columnCount: maze.maxRowColumnCount,
@@ -30,20 +36,28 @@ class MazeView extends StatelessWidget {
   }
 
   TableViewCell _buildCell(BuildContext context, TableVicinity vicinity) {
-
-    MazeCell currentCell = maze.cells.elementAt(vicinity.row).elementAt(vicinity.column);
-    double leftBorder =  borderThin;
+    MazeCell currentCell = maze.cells
+        .elementAt(vicinity.row)
+        .elementAt(vicinity.column);
+    double leftBorder = borderThin;
     double rightBorder = borderThin;
-    double topBorder = borderThin;
     double bottomBorder = borderThin;
+    double topBorder = borderThin;
 
     // todo and is visited check, for now just show all walls
-    if(currentCell.isWallRight) {
-      rightBorder = borderThick;
+    if(currentCell.isWallLeft) {
+      leftBorder = borderHalf;
+    }
+    if (currentCell.isWallRight) {
+      rightBorder = borderHalf;
     }
 
-    if(currentCell.isWallBottom) {
-      bottomBorder = borderThick;
+    if (currentCell.isWallBottom) {
+      bottomBorder = borderHalf;
+    }
+
+    if(currentCell.isWallTop) {
+      topBorder = borderHalf;
     }
 
     return TableViewCell(
@@ -51,60 +65,33 @@ class MazeView extends StatelessWidget {
         builder: (context, ref, _) {
           if (vicinity.column == currentX && vicinity.row == currentY) {
             return Container(
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 129, 28),
-                    border: Border(
-                    left: BorderSide(
-                      color: Colors.black,
-                      width: leftBorder
-                    ),
-                    right: BorderSide(
-                      color: Colors.black,
-                      width: rightBorder
-                    ),
-                    top: BorderSide(
-                      color: Colors.black,
-                      width: topBorder
-                    ),
-                    bottom: BorderSide(
-                      color: Colors.black,
-                      width: bottomBorder
-                    )
-                  )
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 129, 28),
+                border: Border(
+                  top: BorderSide(color: Colors.black, width: topBorder),
+                  left: BorderSide(color: Colors.black, width: leftBorder),
+                  right: BorderSide(color: Colors.black, width: rightBorder),
+                  bottom: BorderSide(color: Colors.black, width: bottomBorder),
                 ),
-                child: Center(
-                  child: Text(
-                    "x",
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.black
-                    ),
-                  ),
+              ),
+              child: Center(
+                child: Text(
+                  "x",
+                  style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
+              ),
             );
           }
 
           return Container(
             decoration: BoxDecoration(
-                color:  Color.fromARGB(255, 255, 255, 230),
-                border: Border(
-                    left: BorderSide(
-                        color: Colors.black,
-                        width: leftBorder
-                    ),
-                    right: BorderSide(
-                        color: Colors.black,
-                        width: rightBorder
-                    ),
-                    top: BorderSide(
-                        color: Colors.black,
-                        width: topBorder
-                    ),
-                    bottom: BorderSide(
-                        color: Colors.black,
-                        width: bottomBorder
-                    )
-                )
+              color: Color.fromARGB(255, 255, 255, 230),
+              border: Border(
+                top: BorderSide(color: Colors.black, width: topBorder),
+                left: BorderSide(color: Colors.black, width: leftBorder),
+                right: BorderSide(color: Colors.black, width: rightBorder),
+                bottom: BorderSide(color: Colors.black, width: bottomBorder),
+              ),
             ),
           );
         },
@@ -115,25 +102,25 @@ class MazeView extends StatelessWidget {
   TableSpan _rowBuildSpan(BuildContext context, int index) {
     double leadingBorderWidth = borderThin;
     double trailingBorderWidth = borderThin;
-    if(index == 0) {
-      leadingBorderWidth = borderThick;
+    if (index == 0) {
+      leadingBorderWidth = borderWhole;
     }
-    if(index == maze.maxRowColumnCount -1) {
-      trailingBorderWidth = borderThick;
+    if (index == maze.maxRowColumnCount - 1) {
+      trailingBorderWidth = borderWhole;
     }
     return TableSpan(
       extent: FixedTableSpanExtent(75),
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-              width: leadingBorderWidth
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            width: leadingBorderWidth,
           ),
           trailing: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-              width: trailingBorderWidth
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            width: trailingBorderWidth,
           ),
-        )
+        ),
       ),
     );
   }
@@ -141,23 +128,23 @@ class MazeView extends StatelessWidget {
   TableSpan _columnBuildSpan(BuildContext context, int index) {
     double leadingBorderWidth = borderThin;
     double trailingBorderWidth = borderThin;
-    if(index == 0) {
-      leadingBorderWidth = borderThick;
+    if (index == 0) {
+      leadingBorderWidth = borderWhole;
     }
-    if(index == maze.maxRowColumnCount -1) {
-      trailingBorderWidth = borderThick;
+    if (index == maze.maxRowColumnCount - 1) {
+      trailingBorderWidth = borderWhole;
     }
     return TableSpan(
       extent: FixedTableSpanExtent(75),
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            width: leadingBorderWidth
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            width: leadingBorderWidth,
           ),
           trailing: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            width: trailingBorderWidth
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            width: trailingBorderWidth,
           ),
         ),
       ),
