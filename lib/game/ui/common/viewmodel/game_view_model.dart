@@ -56,7 +56,7 @@ class GameViewModel extends ChangeNotifier {
                         foundWall = true;
                         break;
                     } else {
-                        maze.cells.elementAt(currentI + 1).elementAt(currentJ).visit();
+                        maze.cells.elementAt(currentI).elementAt(currentJ + 1).visit();
                         currentJ = currentJ + 1;
                         break;
                     }
@@ -75,7 +75,7 @@ class GameViewModel extends ChangeNotifier {
                         break;
                     } else {
                         maze.cells.elementAt(currentI).elementAt(currentJ + 1).visit();
-                        currentJ = currentJ + 1;
+                        currentI = currentI + 1;
                         break;
                     }
             }

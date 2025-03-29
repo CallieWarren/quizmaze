@@ -38,7 +38,7 @@ class MazePage extends StatelessWidget {
                     mazeState.move(Direction.down);
                   } else if (details.delta.dy < -sensitivity) {
                     // Up Swipe
-                    mazeState.move(Direction.right);
+                    mazeState.move(Direction.up);
                   }
                 },
                 child: MazeContainer(maze: mazeState.maze,
