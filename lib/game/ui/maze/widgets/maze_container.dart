@@ -7,11 +7,13 @@ import '../../maze/widgets/maze_view.dart';
 
 
 class MazeContainer extends StatelessWidget {
-  const MazeContainer({super.key, required this.maze, required this.currentX, required this.currentY, required this.exit});
+  const MazeContainer(
+      {super.key, required this.maze, required this.currentI, required this.currentJ, required this.exitI, required this.exitJ});
   final Maze maze;
-  final int currentX;
-  final int currentY;
-  final Point exit;
+  final int currentI;
+  final int currentJ;
+  final int exitI;
+  final int exitJ;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class MazeContainer extends StatelessWidget {
       child: SizedBox(
         height: 300,
         width: 300,
-        child: MazeView(maze: maze, currentX: currentX, currentY: currentY, exit: exit),
+        child: MazeView(maze: maze, currentI: currentI, currentJ: currentJ, exitI: exitI, exitJ: exitJ),
         ),
     );
   }

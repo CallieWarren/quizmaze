@@ -5,13 +5,15 @@ import 'package:flutter/cupertino.dart';
 import '../../flashcard/model/flash_card.dart';
 import '../../maze/model/direction.dart';
 import '../../maze/model/maze.dart';
+import '../../maze/model/maze_cell.dart';
 
 
 class GameViewModel extends ChangeNotifier {
     var maze = Maze();
-    var currentX = 0;
-    var currentY = 0;
-    var exit = Point(3, 3);
+    var currentI = 0;
+    var currentJ = 0;
+    var exitI = 3;
+    var exitJ = 3;
 
     var currentFlashCard = FlashCard();
     var correct = 0;
@@ -35,59 +37,45 @@ class GameViewModel extends ChangeNotifier {
         bool foundExit = false;
         bool foundWall = false;
         while(!foundExit && !foundWall) {
-            if (exit.x == currentX && exit.y == currentY) {
+            if (exitI == currentI && exitJ == currentJ) {
                 foundExit = true;
                 break;
             }
             switch(direction) {
                 case Direction.left:
-                    if(currentX == 0) {
+                    if(maze.cells.elementAt(currentI).elementAt(currentJ).isWallLeft) {
                         foundWall = true;
-                        break;
-                    }
-                    if(maze.cells.elementAt(currentX).elementAt(currentY).neighbors.contains((element) => (element as Point).x == currentX - 1)) {
-                        maze.cells.elementAt(currentX - 1).elementAt(currentY).visit();
-                        currentX = currentX - 1;
                         break;
                     } else {
-                        foundWall = true;
+                        maze.cells.elementAt(currentI).elementAt(currentJ - 1).visit();
+                        currentJ = currentJ -1;
+                        break;
                     }
                 case Direction.right:
-                    if(currentX == maze.maxRowColumnCount) {
+                    if(maze.cells.elementAt(currentI).elementAt(currentJ).isWallRight) {
                         foundWall = true;
-                        break;
-                    }
-                    if(maze.cells.elementAt(currentX).elementAt(currentY).neighbors.contains((element) => (element as Point).x == currentX + 1)) {
-                        maze.cells.elementAt(currentX + 1).elementAt(currentY).visit();
-                        currentX = currentX + 1;
                         break;
                     } else {
-                        foundWall = true;
+                        maze.cells.elementAt(currentI + 1).elementAt(currentJ).visit();
+                        currentJ = currentJ + 1;
                         break;
                     }
                 case Direction.up:
-                    if(currentY == 0) {
+                    if(maze.cells.elementAt(currentI).elementAt(currentJ).isWallTop) {
                         foundWall = true;
-                        break;
-                    }
-                    if(maze.cells.elementAt(currentX).elementAt(currentY).neighbors.contains((element) => (element as Point).y == currentY - 1)) {
-                        maze.cells.elementAt(currentY - 1).elementAt(currentY).visit();
-                        currentY = currentY - 1;
                         break;
                     } else {
-                        foundWall = true;
+                        maze.cells.elementAt(currentI - 1).elementAt(currentJ).visit();
+                        currentI = currentI - 1;
+                        break;
                     }
                 case Direction.down:
-                    if(currentY == maze.maxRowColumnCount) {
+                    if(maze.cells.elementAt(currentI).elementAt(currentJ).isWallBottom) {
                         foundWall = true;
-                        break;
-                    }
-                    if(maze.cells.elementAt(currentX).elementAt(currentY).neighbors.contains((element) => (element as Point).y == currentY + 1)) {
-                        maze.cells.elementAt(currentX).elementAt(currentY + 1).visit();
-                        currentY = currentY + 1;
                         break;
                     } else {
-                        foundWall = true;
+                        maze.cells.elementAt(currentI).elementAt(currentJ + 1).visit();
+                        currentJ = currentJ + 1;
                         break;
                     }
             }

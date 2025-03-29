@@ -11,15 +11,17 @@ class MazeView extends StatelessWidget {
   const MazeView({
     super.key,
     required this.maze,
-    required this.currentX,
-    required this.currentY,
-    required this.exit,
+    required this.currentI,
+    required this.currentJ,
+    required this.exitI,
+    required this.exitJ
   });
 
   final Maze maze;
-  final int currentX;
-  final int currentY;
-  final Point exit;
+  final int currentI;
+  final int currentJ;
+  final int exitI;
+  final int exitJ;
   final double borderWhole = 8.0;
   final double borderHalf = 4.0;
   final double borderThin = 1.0;
@@ -63,7 +65,7 @@ class MazeView extends StatelessWidget {
     return TableViewCell(
       child: Consumer(
         builder: (context, ref, _) {
-          if (vicinity.column == currentX && vicinity.row == currentY) {
+          if (vicinity.row == currentI && vicinity.column == currentJ) {
             return Container(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 255, 129, 28),

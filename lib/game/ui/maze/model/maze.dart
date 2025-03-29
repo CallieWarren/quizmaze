@@ -31,19 +31,19 @@ class Maze {
       var row = List<MazeCell>.empty(growable: true);
       for(int j = 0; j < maxRowColumnCount; j++) {
         var currentCell = MazeCell();
-        if(j > 0 && isWallLeft(i, j)) {
+        if(j == 0 || j > 0 && isWallLeft(i, j)) {
           // left
           currentCell.isWallLeft = true;
         }
-        if(j < (maxRowColumnCount -1) && isWallRight(i, j)) {
+        if(j == maxRowColumnCount - 1 || j < (maxRowColumnCount -1) && isWallRight(i, j)) {
           // right
           currentCell.isWallRight = true;
         }
-        if(i > 0 && isWallTop(i, j)) {
+        if(i == 0 || i > 0 && isWallTop(i, j)) {
           // top
           currentCell.isWallTop = true;
         }
-        if(i < maxRowColumnCount - 1 && isWallBottom(i, j)) {
+        if(i == maxRowColumnCount - 1 || i < maxRowColumnCount - 1 && isWallBottom(i, j)) {
           // bottom
           currentCell.isWallBottom = true;
         }
