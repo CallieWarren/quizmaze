@@ -22,7 +22,7 @@ class MazePage extends StatelessWidget {
               GestureDetector(
                 onHorizontalDragUpdate: (details) {
                   // Note: Sensitivity is integer used when you don't want to mess up vertical drag
-                  int sensitivity = 4;
+                  int sensitivity = 3;
                   if (details.delta.dx > sensitivity) {
                     // Right Swipe
                     mazeState.move(Direction.right);
@@ -32,7 +32,7 @@ class MazePage extends StatelessWidget {
                   }
                 },
                 onVerticalDragUpdate: (details) {
-                  int sensitivity = 4;
+                  int sensitivity = 3;
                   if (details.delta.dy > sensitivity) {
                     // Down Swipe
                     mazeState.move(Direction.down);

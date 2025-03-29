@@ -76,13 +76,23 @@ class MazeView extends StatelessWidget {
       bottomBorder = borderHalf;
     }
 
+    String cellMarker = "";
+    Color cellBackground;
+    if(vicinity.row == currentI && vicinity.column == currentJ) {
+      cellMarker = "x";
+      cellBackground = Color.fromARGB(255, 255, 129, 28);
+    } else if(currentCell.isVisited) {
+      cellBackground = Color.fromARGB(200, 46, 196, 181);
+    } else {
+      cellBackground = Color.fromARGB(255, 255, 255, 230);
+    }
+
     return TableViewCell(
       child: Consumer(
         builder: (context, ref, _) {
-          if (vicinity.row == currentI && vicinity.column == currentJ) {
             return Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 129, 28),
+                color: cellBackground,
                 border: Border(
                   top: BorderSide(color: Colors.black, width: topBorder),
                   left: BorderSide(color: Colors.black, width: leftBorder),
@@ -92,25 +102,12 @@ class MazeView extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "x",
+                  cellMarker,
                   style: TextStyle(fontSize: 24, color: Colors.black),
                 ),
               ),
             );
           }
-
-          return Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 230),
-              border: Border(
-                top: BorderSide(color: Colors.black, width: topBorder),
-                left: BorderSide(color: Colors.black, width: leftBorder),
-                right: BorderSide(color: Colors.black, width: rightBorder),
-                bottom: BorderSide(color: Colors.black, width: bottomBorder),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

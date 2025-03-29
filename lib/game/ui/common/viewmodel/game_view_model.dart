@@ -9,11 +9,14 @@ import '../../maze/model/maze_cell.dart';
 
 
 class GameViewModel extends ChangeNotifier {
-    var maze = Maze();
     var currentI = 0;
     var currentJ = 0;
     var exitI = 3;
     var exitJ = 3;
+    var maze = Maze(
+        startI: 0,
+        startJ: 0
+    );
 
     var currentFlashCard = FlashCard();
     var correct = 0;

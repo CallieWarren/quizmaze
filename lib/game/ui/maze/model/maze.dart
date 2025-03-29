@@ -6,6 +6,9 @@ import 'package:quizmaze/game/ui/maze/model/wall.dart';
 import 'maze_cell.dart';
 
 class Maze {
+
+  int startI;
+  int startJ;
   var cells = List<List<MazeCell>>.empty(growable: true);
   var walls = List<Wall>.empty(growable: true);
   final maxRowColumnCount = 4;
@@ -93,7 +96,11 @@ class Maze {
   }
 
 
-  Maze(){
+  Maze({
+    required this.startI,
+    required this.startJ
+  }) {
     init();
+    cells.elementAt(startI).elementAt(startJ).visit();
   }
 }
