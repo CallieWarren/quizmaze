@@ -46,20 +46,34 @@ class MazeView extends StatelessWidget {
     double bottomBorder = borderThin;
     double topBorder = borderThin;
 
-    // todo and is visited check, for now just show all walls
-    if(currentCell.isWallLeft) {
+    // if we have visited the cell and there is a wall on the left OR
+    // if we have visited the cell to our left and there is a wall on the left
+    if((currentCell.isWallLeft && (currentCell.isVisited || vicinity.column == 0)) ||
+        (vicinity.column > 0 && maze.cells.elementAt(vicinity.row).elementAt(vicinity.column - 1).isVisited &&
+            currentCell.isWallLeft)
+    ) {
       leftBorder = borderHalf;
     }
-    if (currentCell.isWallRight) {
+
+    // if we have visited the cell and there is a wall on the right OR
+    // if we have visited the cell to our right and there is a wall on the right
+    if (currentCell.isWallRight && (currentCell.isVisited || vicinity.column == maze.maxRowColumnCount - 1)
+        || vicinity.column < maze.maxRowColumnCount - 1 && maze.cells.elementAt(vicinity.row).elementAt(vicinity.column + 1).isVisited && currentCell.isWallRight
+    ) {
       rightBorder = borderHalf;
     }
 
-    if (currentCell.isWallBottom) {
-      bottomBorder = borderHalf;
+    // if we have visited the cell and there is a wall on the top OR
+    // if we have visited the cell above and there is a wall on bottom ??
+    if(currentCell.isWallTop && (currentCell.isVisited || vicinity.row == 0) ||
+        vicinity.row > 0 && maze.cells.elementAt(vicinity.row - 1).elementAt(vicinity.column).isVisited && currentCell.isWallTop
+      ) {
+      topBorder = borderHalf;
     }
 
-    if(currentCell.isWallTop) {
-      topBorder = borderHalf;
+    if (currentCell.isWallBottom && (currentCell.isVisited || vicinity.row == maze.maxRowColumnCount - 1) ||
+        vicinity.row < maze.maxRowColumnCount - 1 && maze.cells.elementAt(vicinity.row + 1).elementAt(vicinity.column).isVisited && currentCell.isWallBottom) {
+      bottomBorder = borderHalf;
     }
 
     return TableViewCell(
