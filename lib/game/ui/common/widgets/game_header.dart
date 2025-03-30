@@ -11,12 +11,7 @@ class GameHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
-    String swipesText;
-    if (isMazeView) {
-      swipesText = 'Swipes Remaining :\n${appState.correct}';
-    } else {
-      swipesText = 'Swipes Earned :\n${appState.correct}';
-    }
+    String swipesText = 'Swipes Earned\n${appState.correct}';
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
       color: Color.fromARGB(200, 46, 196, 181),

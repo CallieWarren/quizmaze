@@ -18,11 +18,13 @@ class GameViewModel extends ChangeNotifier {
 
     var currentFlashCard = FlashCard();
     var correct = 0;
+    var swipesAvailable = 0;
     var total = 0;
 
     void getNextQuestion(bool isCorrect) {
         if (isCorrect) {
             correct++;
+            swipesAvailable++;
         }
         total++;
         currentFlashCard.nextQuestion();
@@ -86,6 +88,7 @@ class GameViewModel extends ChangeNotifier {
                     }
             }
         }
+        swipesAvailable--;
         notifyListeners();
     }
 }
