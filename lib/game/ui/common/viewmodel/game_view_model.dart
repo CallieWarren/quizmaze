@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 
 import '../../flashcard/model/flash_card.dart';
 import '../../maze/model/direction.dart';
 import '../../maze/model/maze.dart';
-import '../../maze/model/maze_cell.dart';
 
 
 class GameViewModel extends ChangeNotifier {
@@ -17,6 +14,7 @@ class GameViewModel extends ChangeNotifier {
         startI: 0,
         startJ: 0
     );
+    var foundExit = false;
 
     var currentFlashCard = FlashCard();
     var correct = 0;
@@ -43,7 +41,6 @@ class GameViewModel extends ChangeNotifier {
     }
 
     void move(Direction direction) {
-        bool foundExit = false;
         bool foundWall = false;
         while(!foundExit && !foundWall) {
             if (exitI == currentI && exitJ == currentJ) {

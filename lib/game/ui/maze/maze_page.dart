@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../common/viewmodel/game_view_model.dart';
 import '../common/widgets/game_header.dart';
+import '../common/widgets/navigation_button.dart';
+import '../flashcard/quiz_page.dart';
 import '../maze/widgets/maze_container.dart';
 import 'model/direction.dart';
 
@@ -45,6 +47,8 @@ class MazePage extends StatelessWidget {
                     mazeState: mazeState,
                 ),
               ),
+              Spacer(flex: 1),
+              NavigationButton(buttonText: 'Quiz', navDestination: QuizPage(),),
             ]
         )
         ),

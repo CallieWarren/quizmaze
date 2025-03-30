@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
 import 'package:quizmaze/game/ui/flashcard/widgets/flash_card_view.dart';
+import 'package:quizmaze/game/ui/maze/maze_page.dart';
 
 import '../common/widgets/game_header.dart';
 import '../common/widgets/navigation_button.dart';
 
 class QuizPage extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
     var currentFlashCard = appState.currentFlashCard;
@@ -82,7 +84,7 @@ class QuizPage extends StatelessWidget {
                 ),
               ),
               Spacer(flex: 1),
-              NavigationButton(),
+              NavigationButton(buttonText: 'Maze', navDestination: MazePage(),),
             ],
           ),
         ),

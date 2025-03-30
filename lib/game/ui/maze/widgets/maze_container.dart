@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
-import 'package:quizmaze/game/ui/maze/model/maze.dart';
 
 import '../../maze/widgets/maze_view.dart';
 

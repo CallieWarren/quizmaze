@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import '../../maze/maze_page.dart';
 
 class NavigationButton extends StatelessWidget {
+  NavigationButton({required this.buttonText, required this.navDestination});
+
+  final String buttonText;
+  final Widget navDestination;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -13,7 +18,7 @@ class NavigationButton extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MazePage()),
+                  MaterialPageRoute(builder: (context) => navDestination),
                 );
               },
               style: ButtonStyle(
@@ -28,7 +33,7 @@ class NavigationButton extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Maze',
+                buttonText,
                 style: TextStyle(
                   color: Color.fromARGB(255, 47, 48, 44),
                   fontSize: 24,

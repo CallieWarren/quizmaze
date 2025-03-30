@@ -29,7 +29,6 @@ class MazeView extends StatelessWidget {
       rowBuilder: (index) => _columnBuildSpan(context, index),
     );
   }
-
   TableViewCell _buildCell(BuildContext context, TableVicinity vicinity) {
     MazeCell currentCell = mazeState.maze.cells
         .elementAt(vicinity.row)
@@ -69,17 +68,39 @@ class MazeView extends StatelessWidget {
       bottomBorder = borderHalf;
     }
 
-    String cellMarker = "";
     Color cellBackground;
+    String cellMarker = "";
+
+    if(mazeState.foundExit) {
+      cellBackground = Color.fromARGB(200, 46, 196, 181);
+      return TableViewCell(
+        child: Consumer(
+            builder: (context, ref, _) {
+              return buildNonClickableMazeComponents(
+                  vicinity,
+                  cellBackground,
+                  leftBorder,
+                  rightBorder,
+                  topBorder,
+                  bottomBorder,
+                  cellMarker);
+            }
+        ),
+      );
+    }
+
     if(vicinity.row == mazeState.currentI && vicinity.column == mazeState.currentJ) {
       cellMarker = "x";
-      cellBackground = Color.fromARGB(255, 255, 129, 28);
+      cellBackground = Color.fromARGB(255, 255, 170, 90);
     } else if(currentCell.isVisited) {
       cellBackground = Color.fromARGB(200, 46, 196, 181);
+    } else if(vicinity.row == mazeState.exitI && vicinity.column == mazeState.exitJ) {
+      cellMarker = "!";
+      cellBackground = Color.fromARGB(255, 250,255,129);
     } else {
       cellBackground = Color.fromARGB(255, 255, 255, 230);
     }
-
+    
     Widget cell;
     if(currentCell.isVisited && currentCell.isRevisitOption() && !(vicinity.row == mazeState.currentI && vicinity.column == mazeState.currentJ)) {
       cellMarker = "?";
