@@ -41,11 +41,9 @@ class MazePage extends StatelessWidget {
                     mazeState.move(Direction.up);
                   }
                 },
-                child: MazeContainer(maze: mazeState.maze,
-                    currentI: mazeState.currentI,
-                    currentJ: mazeState.currentJ,
-                    exitI: mazeState.exitI,
-                    exitJ: mazeState.exitJ),
+                child: MazeContainer(
+                    mazeState: mazeState,
+                ),
               ),
             ]
         )

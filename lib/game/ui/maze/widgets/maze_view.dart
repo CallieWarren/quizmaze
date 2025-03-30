@@ -4,24 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-import '../model/maze.dart';
+import '../../common/viewmodel/game_view_model.dart';
 import '../model/maze_cell.dart';
 
 class MazeView extends StatelessWidget {
   const MazeView({
     super.key,
-    required this.maze,
-    required this.currentI,
-    required this.currentJ,
-    required this.exitI,
-    required this.exitJ
+    required this.mazeState
   });
 
-  final Maze maze;
-  final int currentI;
-  final int currentJ;
-  final int exitI;
-  final int exitJ;
+  final GameViewModel mazeState;
+
   final double borderWhole = 8.0;
   final double borderHalf = 4.0;
   final double borderThin = 1.0;
@@ -30,15 +23,15 @@ class MazeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableView.builder(
       cellBuilder: _buildCell,
-      columnCount: maze.maxRowColumnCount,
+      columnCount: mazeState.maze.maxRowColumnCount,
       columnBuilder: (index) => _rowBuildSpan(context, index),
-      rowCount: maze.maxRowColumnCount,
+      rowCount: mazeState.maze.maxRowColumnCount,
       rowBuilder: (index) => _columnBuildSpan(context, index),
     );
   }
 
   TableViewCell _buildCell(BuildContext context, TableVicinity vicinity) {
-    MazeCell currentCell = maze.cells
+    MazeCell currentCell = mazeState.maze.cells
         .elementAt(vicinity.row)
         .elementAt(vicinity.column);
     double leftBorder = borderThin;
@@ -49,7 +42,7 @@ class MazeView extends StatelessWidget {
     // if we have visited the cell and there is a wall on the left OR
     // if we have visited the cell to our left and there is a wall on the left
     if((currentCell.isWallLeft && (currentCell.isVisited || vicinity.column == 0)) ||
-        (vicinity.column > 0 && maze.cells.elementAt(vicinity.row).elementAt(vicinity.column - 1).isVisited &&
+        (vicinity.column > 0 && mazeState.maze.cells.elementAt(vicinity.row).elementAt(vicinity.column - 1).isVisited &&
             currentCell.isWallLeft)
     ) {
       leftBorder = borderHalf;
@@ -57,8 +50,8 @@ class MazeView extends StatelessWidget {
 
     // if we have visited the cell and there is a wall on the right OR
     // if we have visited the cell to our right and there is a wall on the right
-    if (currentCell.isWallRight && (currentCell.isVisited || vicinity.column == maze.maxRowColumnCount - 1)
-        || vicinity.column < maze.maxRowColumnCount - 1 && maze.cells.elementAt(vicinity.row).elementAt(vicinity.column + 1).isVisited && currentCell.isWallRight
+    if (currentCell.isWallRight && (currentCell.isVisited || vicinity.column == mazeState.maze.maxRowColumnCount - 1)
+        || vicinity.column < mazeState.maze.maxRowColumnCount - 1 && mazeState.maze.cells.elementAt(vicinity.row).elementAt(vicinity.column + 1).isVisited && currentCell.isWallRight
     ) {
       rightBorder = borderHalf;
     }
@@ -66,19 +59,19 @@ class MazeView extends StatelessWidget {
     // if we have visited the cell and there is a wall on the top OR
     // if we have visited the cell above and there is a wall on bottom ??
     if(currentCell.isWallTop && (currentCell.isVisited || vicinity.row == 0) ||
-        vicinity.row > 0 && maze.cells.elementAt(vicinity.row - 1).elementAt(vicinity.column).isVisited && currentCell.isWallTop
+        vicinity.row > 0 && mazeState.maze.cells.elementAt(vicinity.row - 1).elementAt(vicinity.column).isVisited && currentCell.isWallTop
       ) {
       topBorder = borderHalf;
     }
 
-    if (currentCell.isWallBottom && (currentCell.isVisited || vicinity.row == maze.maxRowColumnCount - 1) ||
-        vicinity.row < maze.maxRowColumnCount - 1 && maze.cells.elementAt(vicinity.row + 1).elementAt(vicinity.column).isVisited && currentCell.isWallBottom) {
+    if (currentCell.isWallBottom && (currentCell.isVisited || vicinity.row == mazeState.maze.maxRowColumnCount - 1) ||
+        vicinity.row < mazeState.maze.maxRowColumnCount - 1 && mazeState.maze.cells.elementAt(vicinity.row + 1).elementAt(vicinity.column).isVisited && currentCell.isWallBottom) {
       bottomBorder = borderHalf;
     }
 
     String cellMarker = "";
     Color cellBackground;
-    if(vicinity.row == currentI && vicinity.column == currentJ) {
+    if(vicinity.row == mazeState.currentI && vicinity.column == mazeState.currentJ) {
       cellMarker = "x";
       cellBackground = Color.fromARGB(255, 255, 129, 28);
     } else if(currentCell.isVisited) {
@@ -87,27 +80,60 @@ class MazeView extends StatelessWidget {
       cellBackground = Color.fromARGB(255, 255, 255, 230);
     }
 
+    Widget cell;
+    if(currentCell.isVisited && currentCell.isRevisitOption() && !(vicinity.row == mazeState.currentI && vicinity.column == mazeState.currentJ)) {
+      cellMarker = "?";
+      cell = buildClickableMazeCell(vicinity, cellBackground, leftBorder, rightBorder, topBorder, bottomBorder, cellMarker);
+    } else {
+      cell = buildNonClickableMazeComponents(vicinity, cellBackground, leftBorder, rightBorder, topBorder, bottomBorder, cellMarker);
+    }
+
     return TableViewCell(
       child: Consumer(
         builder: (context, ref, _) {
-            return Container(
-              decoration: BoxDecoration(
-                color: cellBackground,
-                border: Border(
-                  top: BorderSide(color: Colors.black, width: topBorder),
-                  left: BorderSide(color: Colors.black, width: leftBorder),
-                  right: BorderSide(color: Colors.black, width: rightBorder),
-                  bottom: BorderSide(color: Colors.black, width: bottomBorder),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  cellMarker,
-                  style: TextStyle(fontSize: 24, color: Colors.black),
-                ),
-              ),
-            );
+            return cell;
           }
+      ),
+    );
+  }
+
+  Widget buildClickableMazeCell(TableVicinity vicinity, Color cellBackground,
+      double leftBorder, double rightBorder, double topBorder,
+      double bottomBorder, String cellMarker) {
+    return InkWell(
+      onTap: () {
+        mazeState.updateCurrent(vicinity.row, vicinity.column);
+      },
+        child: buildNonClickableMazeComponents(
+            vicinity,
+            cellBackground,
+            leftBorder,
+            rightBorder,
+            topBorder,
+            bottomBorder,
+            cellMarker)
+    );
+  }
+
+  Widget buildNonClickableMazeComponents(TableVicinity vicinity,
+      Color cellBackground,
+      double leftBorder, double rightBorder, double topBorder,
+      double bottomBorder, String cellMarker) {
+    return Container(
+      decoration: BoxDecoration(
+        color: cellBackground,
+        border: Border(
+          top: BorderSide(color: Colors.black, width: topBorder),
+          left: BorderSide(color: Colors.black, width: leftBorder),
+          right: BorderSide(color: Colors.black, width: rightBorder),
+          bottom: BorderSide(color: Colors.black, width: bottomBorder),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          cellMarker,
+          style: TextStyle(fontSize: 24, color: Colors.black),
+        ),
       ),
     );
   }
@@ -118,7 +144,7 @@ class MazeView extends StatelessWidget {
     if (index == 0) {
       leadingBorderWidth = borderWhole;
     }
-    if (index == maze.maxRowColumnCount - 1) {
+    if (index == mazeState.maze.maxRowColumnCount - 1) {
       trailingBorderWidth = borderWhole;
     }
     return TableSpan(
@@ -144,7 +170,7 @@ class MazeView extends StatelessWidget {
     if (index == 0) {
       leadingBorderWidth = borderWhole;
     }
-    if (index == maze.maxRowColumnCount - 1) {
+    if (index == mazeState.maze.maxRowColumnCount - 1) {
       trailingBorderWidth = borderWhole;
     }
     return TableSpan(

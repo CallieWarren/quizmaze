@@ -36,6 +36,12 @@ class GameViewModel extends ChangeNotifier {
         notifyListeners();
     }
 
+    void updateCurrent(newI, newJ) {
+        currentI = newI;
+        currentJ = newJ;
+        notifyListeners();
+    }
+
     void move(Direction direction) {
         bool foundExit = false;
         bool foundWall = false;
