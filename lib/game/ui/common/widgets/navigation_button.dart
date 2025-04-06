@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../maze/maze_page.dart';
 
 class NavigationButton extends StatelessWidget {
   NavigationButton({required this.buttonText, required this.navDestination});

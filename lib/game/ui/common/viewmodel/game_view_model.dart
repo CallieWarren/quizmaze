@@ -88,7 +88,9 @@ class GameViewModel extends ChangeNotifier {
                     }
             }
         }
-        swipesAvailable--;
+        if(swipesAvailable > 0) {
+            swipesAvailable--;
+        }
         notifyListeners();
     }
 }
