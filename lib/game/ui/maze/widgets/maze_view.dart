@@ -81,7 +81,7 @@ class MazeView extends StatelessWidget {
     }
 
     Color cellBackground;
-    String cellMarker = "";
+    AssetImage? cellMarker;
 
     if(mazeState.foundExit) {
       cellBackground = Color.fromARGB(200, 46, 196, 181);
@@ -101,13 +101,18 @@ class MazeView extends StatelessWidget {
       );
     }
 
+
     if(vicinity.row == mazeState.currentI && vicinity.column == mazeState.currentJ) {
-      cellMarker = "x";
+      if(mazeState.swipesAvailable == 0) {
+        cellMarker = AssetImage('assets/person_shrugging_icon.png');
+      } else {
+        cellMarker = AssetImage('assets/person_icon.png');
+      }
       cellBackground = Color.fromARGB(255, 255, 170, 90);
     } else if(currentCell.isVisited) {
       cellBackground = Color.fromARGB(200, 46, 196, 181);
     } else if(vicinity.row == mazeState.exitI && vicinity.column == mazeState.exitJ) {
-      cellMarker = "!";
+      cellMarker = AssetImage('assets/treasure_icon.png');
       cellBackground = Color.fromARGB(255, 250,255,129);
     } else {
       cellBackground = Color.fromARGB(255, 255, 255, 230);
@@ -115,7 +120,7 @@ class MazeView extends StatelessWidget {
     
     Widget cell;
     if(currentCell.isVisited && currentCell.isRevisitOption() && !(vicinity.row == mazeState.currentI && vicinity.column == mazeState.currentJ)) {
-      cellMarker = "?";
+      cellMarker = AssetImage('assets/fork_icon.png');
       cell = buildClickableMazeCell(vicinity, cellBackground, leftBorder, rightBorder, topBorder, bottomBorder, cellMarker);
     } else {
       cell = buildNonClickableMazeComponents(vicinity, cellBackground, leftBorder, rightBorder, topBorder, bottomBorder, cellMarker);
@@ -132,7 +137,7 @@ class MazeView extends StatelessWidget {
 
   Widget buildClickableMazeCell(TableVicinity vicinity, Color cellBackground,
       double leftBorder, double rightBorder, double topBorder,
-      double bottomBorder, String cellMarker) {
+      double bottomBorder, AssetImage? cellMarker) {
     return InkWell(
       onTap: () {
         mazeState.updateCurrent(vicinity.row, vicinity.column);
@@ -151,7 +156,11 @@ class MazeView extends StatelessWidget {
   Widget buildNonClickableMazeComponents(TableVicinity vicinity,
       Color cellBackground,
       double leftBorder, double rightBorder, double topBorder,
-      double bottomBorder, String cellMarker) {
+      double bottomBorder, AssetImage? cellMarker) {
+    Widget imageOrNone = Container(color: Colors.transparent);
+    if(cellMarker != null) {
+      imageOrNone = Container(padding: EdgeInsets.all(4.0), child: Image(image: cellMarker));
+    }
     return Container(
       decoration: BoxDecoration(
         color: cellBackground,
@@ -163,10 +172,7 @@ class MazeView extends StatelessWidget {
         ),
       ),
       child: Center(
-        child: Text(
-          cellMarker,
-          style: TextStyle(fontSize: 24, color: Colors.black),
-        ),
+        child: imageOrNone,
       ),
     );
   }
