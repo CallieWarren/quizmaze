@@ -21,7 +21,11 @@ class GameViewModel extends ChangeNotifier {
     var swipesAvailable = 0;
     var total = 0;
     var flashcards = List<Flashcard>.empty(growable: true);
-    var currentFlashCard = 0;
+    var currentFlashCardIndex = 0;
+
+    void setFlashcards(List<Flashcard> flashcards) {
+        this.flashcards = flashcards;
+    }
 
     void getNextQuestion(bool isCorrect) {
         if (isCorrect) {
@@ -29,12 +33,12 @@ class GameViewModel extends ChangeNotifier {
             swipesAvailable++;
         }
         total++;
-        currentFlashCard.nextQuestion();
+        currentFlashCardIndex++;
         notifyListeners();
     }
 
     void getNextSide() {
-        currentFlashCard.nextSide();
+        flashcards[currentFlashCardIndex].nextSide();
         notifyListeners();
     }
 
@@ -42,6 +46,13 @@ class GameViewModel extends ChangeNotifier {
         currentI = newI;
         currentJ = newJ;
         notifyListeners();
+    }
+
+    Flashcard? getCurrentFlashcard() {
+        if(flashcards.isEmpty) {
+            return null;
+        }
+        return flashcards[currentFlashCardIndex];
     }
 
     void move(Direction direction) {

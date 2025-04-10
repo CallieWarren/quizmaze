@@ -1,29 +1,43 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizmaze/game/ui/flashcard/model/flash_card.dart';
-import 'package:quizmaze/game/ui/flashcard/model/flashcard.dart';
 
 import '../../common/viewmodel/game_view_model.dart';
 import '../../common/widgets/game_header.dart';
 import '../../common/widgets/navigation_button.dart';
 import '../../maze/maze_page.dart';
+import '../model/flashcard.dart';
 import '../quiz_page.dart';
 import 'flash_card_view.dart';
 
 class QuizStateBuilder extends State<QuizPage> {
-  Future<String> getFlashcards() async {
-    return DefaultAssetBundle.of(context).loadString("assets/mlb_flashcards.json");
+  var flashcards = List<Flashcard>.empty(growable: true);
+
+  Future<void> getFlashcards() async {
+    var jsonText = await DefaultAssetBundle.of(context).loadString("assets/mlb_flashcards.json");
+    var parsed = await json.decode(jsonText);
+    flashcards = (parsed['Flashcards'] as List)
+        .map((e) => Flashcard.fromJson(e))
+        .toList();
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      getFlashcards();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
+    appState.flashcards = flashcards;
 
-    return FutureBuilder<String>(
-      future: getFlashcards(), // a previously-obtained Future<String> or null
-      builder:
-          (BuildContext context, AsyncSnapshot<String> snapshot) => Scaffold(
+    return Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(
               child: Center(
@@ -38,7 +52,7 @@ class QuizStateBuilder extends State<QuizPage> {
                             child: Container(
                               margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
                               child: FlashcardView(
-                                currentFlashCard: currentFlashCard,
+                                currentFlashCard: appState.getCurrentFlashcard(),
                               ),
                             ),
                           ),
@@ -102,8 +116,7 @@ class QuizStateBuilder extends State<QuizPage> {
                   ],
                 ),
               ),
-            ),
-          ),
+            )
     );
   }
 }
