@@ -94,7 +94,7 @@ class MazePage extends StatelessWidget {
                           padding: const EdgeInsets.all(20),
                           child: Center(
                             child: Text(
-                              '${getSwipeText(mazeState.swipesAvailable)} Remaining\n${mazeState.swipesAvailable}',
+                              '${mazeState.getSwipeText(mazeState.swipesAvailable)} Remaining\n${mazeState.swipesAvailable}',
                               style: largeText,
                               textAlign: TextAlign.center,
                             ),
@@ -115,13 +115,5 @@ class MazePage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String getSwipeText(int swipesAvailable) {
-    if (swipesAvailable == 1) {
-      return 'Swipe';
-    } else {
-      return 'Swipes';
-    }
   }
 }

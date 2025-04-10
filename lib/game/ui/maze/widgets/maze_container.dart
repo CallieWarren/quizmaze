@@ -12,11 +12,13 @@ class MazeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget backgroundWidget;
+    Widget disabledBackgorundWidget = Image(image: AssetImage('assets/static_image.png'));
+    Widget mazeView = MazeView(mazeState: mazeState);
+    List<Widget> children;
     if (mazeState.swipesAvailable == 0) {
-      backgroundWidget = Image(image: AssetImage('assets/static_image.png'));
+      children = [mazeView, disabledBackgorundWidget];
     } else {
-      backgroundWidget = Container(color: Colors.transparent);
+      children = [mazeView];
     }
     return Stack(
       children: [
@@ -25,7 +27,7 @@ class MazeContainer extends StatelessWidget {
           child: SizedBox(
             height: 300,
             width: 300,
-            child: Stack(children: [MazeView(mazeState: mazeState), backgroundWidget,]),
+            child: Stack(children: children),
           ),
         ),
       ],

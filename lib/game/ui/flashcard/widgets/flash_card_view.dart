@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
-
-import '../model/flash_card.dart';
+import 'package:quizmaze/game/ui/flashcard/model/flashcard.dart';
 
 class FlashcardView extends StatelessWidget {
   const FlashcardView({super.key, required this.currentFlashCard});
 
-  final FlashCard currentFlashCard;
+  final Flashcard? currentFlashCard;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +16,13 @@ class FlashcardView extends StatelessWidget {
     );
     var appState = context.watch<GameViewModel>();
 
-    String flashCardText;
-    if (currentFlashCard.isQuestionSide) {
-      flashCardText = "Question ${currentFlashCard.count}";
-    } else {
-      flashCardText = "Answer ${currentFlashCard.count}";
+    String flashCardText = "";
+    if(currentFlashCard != null) {
+      if (currentFlashCard?.isQuestionSide == true) {
+        flashCardText = currentFlashCard!.question;
+      } else {
+        flashCardText = currentFlashCard!.answer;
+      }
     }
 
     return SizedBox(

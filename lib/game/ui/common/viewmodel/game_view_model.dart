@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 
-import '../../flashcard/model/flash_card.dart';
+import '../../flashcard/model/flashcard.dart';
 import '../../maze/model/direction.dart';
 import '../../maze/model/maze.dart';
 
@@ -15,11 +17,15 @@ class GameViewModel extends ChangeNotifier {
         startJ: 0
     );
     var foundExit = false;
-
-    var currentFlashCard = FlashCard();
     var correct = 0;
     var swipesAvailable = 0;
     var total = 0;
+    var flashcards = List<Flashcard>.empty(growable: true);
+    var currentFlashCardIndex = 0;
+
+    void setFlashcards(List<Flashcard> flashcards) {
+        this.flashcards = flashcards;
+    }
 
     void getNextQuestion(bool isCorrect) {
         if (isCorrect) {
@@ -27,12 +33,12 @@ class GameViewModel extends ChangeNotifier {
             swipesAvailable++;
         }
         total++;
-        currentFlashCard.nextQuestion();
+        currentFlashCardIndex++;
         notifyListeners();
     }
 
     void getNextSide() {
-        currentFlashCard.nextSide();
+        flashcards[currentFlashCardIndex].nextSide();
         notifyListeners();
     }
 
@@ -40,6 +46,13 @@ class GameViewModel extends ChangeNotifier {
         currentI = newI;
         currentJ = newJ;
         notifyListeners();
+    }
+
+    Flashcard? getCurrentFlashcard() {
+        if(flashcards.isEmpty) {
+            return null;
+        }
+        return flashcards[currentFlashCardIndex];
     }
 
     void move(Direction direction) {
@@ -93,4 +106,14 @@ class GameViewModel extends ChangeNotifier {
         }
         notifyListeners();
     }
+
+    String getSwipeText(int swipesAvailable) {
+        if (swipesAvailable == 1) {
+            return 'Swipe';
+        } else {
+            return 'Swipes';
+        }
+    }
+
+
 }
