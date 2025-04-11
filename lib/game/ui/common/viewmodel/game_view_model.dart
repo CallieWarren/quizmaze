@@ -22,6 +22,7 @@ class GameViewModel extends ChangeNotifier {
     var total = 0;
     var flashcards = List<Flashcard>.empty(growable: true);
     var currentFlashCardIndex = 0;
+    String category = "";
 
     void setFlashcards(List<Flashcard> flashcards) {
         this.flashcards = flashcards;

@@ -25,18 +25,20 @@ class MazeView extends StatelessWidget {
     if(mazeState.swipesAvailable == 0) {
       filterColor = Colors.grey;
     }
-    return ColorFiltered(
-      colorFilter: ColorFilter.mode(
-        filterColor,
-        BlendMode.saturation,
-      ),
-      child:
-      TableView.builder(
-        cellBuilder: _buildCell,
-        columnCount: mazeState.maze.maxRowColumnCount,
-        columnBuilder: (index) => _rowBuildSpan(context, index),
-        rowCount: mazeState.maze.maxRowColumnCount,
-        rowBuilder: (index) => _columnBuildSpan(context, index),
+    return ClipRect(
+      child: ColorFiltered(
+        colorFilter: ColorFilter.mode(
+          filterColor,
+          BlendMode.saturation,
+        ),
+        child:
+        TableView.builder(
+          cellBuilder: _buildCell,
+          columnCount: mazeState.maze.maxRowColumnCount,
+          columnBuilder: (index) => _rowBuildSpan(context, index),
+          rowCount: mazeState.maze.maxRowColumnCount,
+          rowBuilder: (index) => _columnBuildSpan(context, index),
+        ),
       ),
     );
   }

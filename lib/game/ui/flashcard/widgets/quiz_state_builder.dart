@@ -14,6 +14,7 @@ import 'flash_card_view.dart';
 
 class QuizStateBuilder extends State<QuizPage> {
   var flashcards = List<Flashcard>.empty(growable: true);
+  String category = "";
 
   Future<void> getFlashcards() async {
     var jsonText = await DefaultAssetBundle.of(context).loadString("assets/mlb_flashcards.json");
@@ -22,6 +23,7 @@ class QuizStateBuilder extends State<QuizPage> {
       flashcards = (parsed['Flashcards'] as List)
           .map((e) => Flashcard.fromJson(e))
           .toList();
+      category = parsed['Category'];
     });
   }
 
@@ -36,14 +38,16 @@ class QuizStateBuilder extends State<QuizPage> {
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
     appState.flashcards = flashcards;
+    appState.category = category;
 
     return Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(
               child: Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GameHeader(isMazeView: false),
+                    GameHeader(),
                     Expanded(
                       flex: 6,
                       child: Row(
@@ -108,7 +112,6 @@ class QuizStateBuilder extends State<QuizPage> {
                         ],
                       ),
                     ),
-                    Spacer(flex: 1),
                     NavigationButton(
                       buttonText: 'Maze',
                       navDestination: MazePage(),

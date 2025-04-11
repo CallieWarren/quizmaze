@@ -12,11 +12,11 @@ class MazeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget disabledBackgorundWidget = Image(image: AssetImage('assets/static_image.png'));
+    Widget disabledBackgroundWidget = Image(image: AssetImage('assets/static_image.png'));
     Widget mazeView = MazeView(mazeState: mazeState);
     List<Widget> children;
     if (mazeState.swipesAvailable == 0) {
-      children = [mazeView, disabledBackgorundWidget];
+      children = [mazeView, disabledBackgroundWidget];
     } else {
       children = [mazeView];
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaze/game/ui/flashcard/quiz_page.dart';
 
 class NavigationButton extends StatelessWidget {
   NavigationButton({required this.buttonText, required this.navDestination});
@@ -16,9 +17,13 @@ class NavigationButton extends StatelessWidget {
             margin: EdgeInsets.all(16),
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => navDestination),
-                );
+                if(navDestination is QuizPage) {
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => navDestination),
+                  );
+                }
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll<Color>(

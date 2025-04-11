@@ -23,10 +23,11 @@ class MazePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            GameHeader(isMazeView: true),
+            GameHeader(),
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
                     onHorizontalDragUpdate: (details) {
@@ -90,8 +91,8 @@ class MazePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.all(20),
-                          padding: const EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: Center(
                             child: Text(
                               '${mazeState.getSwipeText(mazeState.swipesAvailable)} Remaining\n${mazeState.swipesAvailable}',
@@ -103,7 +104,6 @@ class MazePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(flex: 1),
                   NavigationButton(
                     buttonText: 'Quiz',
                     navDestination: QuizPage(),
