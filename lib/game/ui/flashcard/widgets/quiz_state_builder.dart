@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/viewmodel/game_view_model.dart';
+import '../../common/viewmodel/model/destination.dart';
 import '../../common/widgets/game_header.dart';
 import '../../common/widgets/navigation_button.dart';
 import '../../maze/maze_page.dart';
@@ -114,7 +115,9 @@ class QuizStateBuilder extends State<QuizPage> {
                     ),
                     NavigationButton(
                       buttonText: 'Maze',
-                      navDestination: MazePage(),
+                      fromDestination: Destination.quiz,
+                      toDestination: Destination.maze,
+                      toDestinationWidget: MazePage(),
                     ),
                   ],
                 ),

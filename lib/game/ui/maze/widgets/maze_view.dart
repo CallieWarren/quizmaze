@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizmaze/game/ui/levelup/level_up_page.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
 import '../../common/viewmodel/game_view_model.dart';
@@ -86,6 +87,9 @@ class MazeView extends StatelessWidget {
     AssetImage? cellMarker;
 
     if(mazeState.foundExit) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => LevelUpPage()),
+      );
       cellBackground = Color.fromARGB(200, 46, 196, 181);
       return TableViewCell(
         child: Consumer(

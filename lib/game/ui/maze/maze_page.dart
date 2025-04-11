@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../common/viewmodel/game_view_model.dart';
+import '../common/viewmodel/model/destination.dart';
 import '../common/widgets/game_header.dart';
 import '../common/widgets/navigation_button.dart';
 import '../flashcard/quiz_page.dart';
@@ -106,7 +107,9 @@ class MazePage extends StatelessWidget {
                   ),
                   NavigationButton(
                     buttonText: 'Quiz',
-                    navDestination: QuizPage(),
+                    fromDestination: Destination.maze,
+                    toDestination: Destination.quiz,
+                    toDestinationWidget: QuizPage(),
                   ),
                 ],
               ),

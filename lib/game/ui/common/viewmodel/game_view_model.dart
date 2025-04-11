@@ -116,5 +116,9 @@ class GameViewModel extends ChangeNotifier {
         }
     }
 
+    void setBonusSwipes(int bonusSwipes) {
+        swipesAvailable += bonusSwipes;
+    }
+
 
 }
