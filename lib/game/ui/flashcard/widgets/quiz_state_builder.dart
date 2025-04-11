@@ -18,18 +18,18 @@ class QuizStateBuilder extends State<QuizPage> {
   Future<void> getFlashcards() async {
     var jsonText = await DefaultAssetBundle.of(context).loadString("assets/mlb_flashcards.json");
     var parsed = await json.decode(jsonText);
-    flashcards = (parsed['Flashcards'] as List)
-        .map((e) => Flashcard.fromJson(e))
-        .toList();
+    setState(() {
+      flashcards = (parsed['Flashcards'] as List)
+          .map((e) => Flashcard.fromJson(e))
+          .toList();
+    });
   }
 
 
   @override
   void initState() {
     super.initState();
-    setState(() {
       getFlashcards();
-    });
   }
 
   @override
