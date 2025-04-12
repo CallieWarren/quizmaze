@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../common/viewmodel/game_view_model.dart';
@@ -9,13 +10,19 @@ import '../common/widgets/game_header.dart';
 import '../common/widgets/navigation_button.dart';
 import '../maze/maze_page.dart';
 
+
 class LevelUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
 
-    var bonusSwipes = Random().nextInt(5);
+    var bonusSwipes = Random().nextInt(3) + 2;
     appState.setBonusSwipes(bonusSwipes);
+
+    final theme = Theme.of(context);
+    final largeText = theme.textTheme.headlineMedium!.copyWith(
+      color: Color.fromARGB(255, 47, 48, 44),
+    );
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -28,11 +35,30 @@ class LevelUpPage extends StatelessWidget {
                 Expanded(
                   flex: 6,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
-                          child: Image(image: AssetImage('assets/star_shine_icon.png'))
+                        child: Center(
+                          child: Stack(
+                            children:[
+                              SizedBox(
+                                height: 300,
+                                width: 300,
+                                child: Container(
+                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
+                                    child: SvgPicture.asset('assets/star_filled_icon.svg')
+                                ),
+                              ),
+                              SizedBox(
+                                height: 300,
+                                width: 300,
+                                child: Container(
+                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
+                                    child: SvgPicture.asset('assets/star_outline_icon.svg')
+                                ),
+                              ),
+                                                ],
+                          ),
                         ),
                       ),
                     ],
@@ -40,12 +66,25 @@ class LevelUpPage extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: Row(
-                    children: [
-                      Text(
-                        "Maze complete!\n$bonusSwipes Bonus swipes received"
-                      )
-                    ],
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "Maze complete!",
+                                style: largeText,
+                              ),
+                              Text(
+                                "$bonusSwipes bonus swipes received",
+                                style: largeText,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 NavigationButton(
