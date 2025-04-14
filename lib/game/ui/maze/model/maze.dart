@@ -1,31 +1,51 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:quizmaze/game/ui/maze/model/wall.dart';
 
 import 'maze_cell.dart';
 
 class Maze {
 
-  int startI;
-  int startJ;
+  int startI = 0;
+  int startJ = 0;
   var cells = List<List<MazeCell>>.empty(growable: true);
-  var walls = List<Wall>.empty(growable: true);
+  var allWalls = List<Wall>.empty(growable: true);
+  var mazeWalls = List<Wall>.empty(growable: true);
   final maxRowColumnCount = 4;
 
   void init() {
-    // todo random generate walls by level logic?
+    // add every wall
+    for(int i = 0; i < maxRowColumnCount; i++) {
+      for(int j = 0; j < maxRowColumnCount; j++) {
+        if(j < maxRowColumnCount - 1) {
+          allWalls.add(Wall(i, j, i, j+1));
+        }
+        if(i < maxRowColumnCount - 1) {
+          allWalls.add(Wall(i, j, i +1, j));
+        }
+      }
+    }
 
-    // first row walls
-    walls.add(Wall(0, 1, 0, 2));
-    walls.add(Wall(0, 3, 1, 3));
-    // second row walls
-    walls.add(Wall(1, 0, 1, 1));
-    walls.add(Wall(1, 1, 1, 2));
-    // // third row walls
-    walls.add(Wall(2, 0, 2, 1));
-    walls.add(Wall(2, 1, 3, 1));
-    walls.add(Wall(2, 2, 2, 3));
-    walls.add(Wall(2, 2, 3, 2));
-    // // fourth row walls
-    walls.add(Wall(3, 1, 3, 2));
+    var currentI = startI;
+    var currentJ = startJ;
+    do {
+      MazeCell currentCell = cells[currentI][currentJ];
+      currentCell.isVisited = true;
+      // add right and bottom wall to maze list
+      mazeWalls.addAll(allWalls.takeWhile((wall) => (wall.i1 == currentI && wall.j1 == currentJ
+          && wall.i2 == currentI && wall.j2 == currentJ+1) ||
+          wall.i1 == currentI && wall.j1 == currentJ && wall.i2 == currentI + 1 && wall.j2 == currentJ) );
+      bool isRemoveWall = false;
+      while(!isRemoveWall) {
+        var removeWallIndex = Random().nextInt(mazeWalls.length);
+        if() {
+          removeWall = true;
+        }
+
+      }
+    } while(mazeWalls.isNotEmpty);
+
 
     for(int i = 0; i < maxRowColumnCount; i++) {
       var row = List<MazeCell>.empty(growable: true);
