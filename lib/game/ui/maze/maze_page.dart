@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizmaze/game/ui/levelup/level_up_page.dart';
 
 import '../common/viewmodel/game_view_model.dart';
 import '../common/viewmodel/model/destination.dart';
@@ -18,6 +19,22 @@ class MazePage extends StatelessWidget {
     final largeText = theme.textTheme.headlineMedium!.copyWith(
       color: Color.fromARGB(255, 47, 48, 44),
     );
+
+    NavigationButton navButton = NavigationButton(
+      buttonText: 'Quiz',
+      fromDestination: Destination.maze,
+      toDestination: Destination.quiz,
+      toDestinationWidget: QuizPage(),
+    );
+
+    if(mazeState.foundExit) {
+      navButton = NavigationButton(
+        buttonText: 'Level Up',
+        fromDestination: Destination.maze,
+        toDestination: Destination.levelUp,
+        toDestinationWidget: LevelUpPage(),
+      );
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -105,12 +122,7 @@ class MazePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  NavigationButton(
-                    buttonText: 'Quiz',
-                    fromDestination: Destination.maze,
-                    toDestination: Destination.quiz,
-                    toDestinationWidget: QuizPage(),
-                  ),
+                  navButton,
                 ],
               ),
             ),
@@ -119,4 +131,6 @@ class MazePage extends StatelessWidget {
       ),
     );
   }
+
 }
+

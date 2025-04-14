@@ -33,7 +33,9 @@ class NavigationButton extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
                 } else if (fromDestination == Destination.levelUp) {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                  );
                 }
               },
               style: ButtonStyle(

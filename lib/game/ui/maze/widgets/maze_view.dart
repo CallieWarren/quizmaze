@@ -87,9 +87,6 @@ class MazeView extends StatelessWidget {
     AssetImage? cellMarker;
 
     if(mazeState.foundExit) {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LevelUpPage()),
-      );
       cellBackground = Color.fromARGB(200, 46, 196, 181);
       return TableViewCell(
         child: Consumer(
