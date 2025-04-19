@@ -23,7 +23,7 @@ class MazeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color filterColor = Colors.transparent;
-    if(mazeState.swipesAvailable == 0) {
+    if(mazeState.swipesAvailable == 0 && !mazeState.foundExit) {
       filterColor = Colors.grey;
     }
     return ClipRect(

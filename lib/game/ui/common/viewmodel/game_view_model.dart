@@ -13,8 +13,7 @@ class GameViewModel extends ChangeNotifier {
     var maze = Maze();
     var foundExit = false;
     var correct = 0;
-    // var swipesAvailable = 0;
-    var swipesAvailable = 100;
+    var swipesAvailable = 0;
     var total = 0;
     var flashcards = List<Flashcard>.empty(growable: true);
     var currentFlashCardIndex = 0;
@@ -54,6 +53,7 @@ class GameViewModel extends ChangeNotifier {
 
     void move(Direction direction) {
         bool foundWall = false;
+        bool isPlayerMoved = false;
         while(!foundExit && !foundWall) {
             if (maze.exitI == currentI && maze.exitJ == currentJ) {
                 foundExit = true;
@@ -67,6 +67,7 @@ class GameViewModel extends ChangeNotifier {
                     } else {
                         maze.cells.elementAt(currentI).elementAt(currentJ - 1).visit();
                         currentJ = currentJ -1;
+                        isPlayerMoved = true;
                         break;
                     }
                 case Direction.right:
@@ -76,6 +77,7 @@ class GameViewModel extends ChangeNotifier {
                     } else {
                         maze.cells.elementAt(currentI).elementAt(currentJ + 1).visit();
                         currentJ = currentJ + 1;
+                        isPlayerMoved = true;
                         break;
                     }
                 case Direction.up:
@@ -85,6 +87,7 @@ class GameViewModel extends ChangeNotifier {
                     } else {
                         maze.cells.elementAt(currentI - 1).elementAt(currentJ).visit();
                         currentI = currentI - 1;
+                        isPlayerMoved = true;
                         break;
                     }
                 case Direction.down:
@@ -94,11 +97,12 @@ class GameViewModel extends ChangeNotifier {
                     } else {
                         maze.cells.elementAt(currentI + 1).elementAt(currentJ).visit();
                         currentI = currentI + 1;
+                        isPlayerMoved = true;
                         break;
                     }
             }
         }
-        if(swipesAvailable > 0) {
+        if(swipesAvailable > 0 && isPlayerMoved) {
             swipesAvailable--;
         }
         notifyListeners();
