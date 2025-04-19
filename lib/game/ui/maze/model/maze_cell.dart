@@ -1,5 +1,6 @@
 class MazeCell {
-  bool isVisited = false;
+  bool isVisitedByPlayer = false;
+  bool isVisitedForGenerate = false;
   bool isWallRight = false;
   bool isWallLeft = false;
   bool isWallTop = false;
@@ -7,13 +8,13 @@ class MazeCell {
   var neighbors = List<MazeCell>.empty(growable: true);
 
   void visit() {
-    isVisited = true;
+    isVisitedByPlayer = true;
   }
 
   bool isRevisitOption() {
     int unvisitedNeighbors = 0;
     for (var cell in neighbors) {
-      if(!cell.isVisited) {
+      if(!cell.isVisitedByPlayer) {
         unvisitedNeighbors = unvisitedNeighbors+1;
       }
     }

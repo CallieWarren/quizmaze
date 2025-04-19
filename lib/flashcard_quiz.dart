@@ -46,7 +46,7 @@ class QuizMaze extends StatelessWidget {
             secondary: Color.fromARGB(255, 47, 48, 44),
           ),
         ),
-        home: QuizPage(),
+        home: MazePage(),
       ),
     );
   }

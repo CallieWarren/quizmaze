@@ -12,13 +12,11 @@ class GameViewModel extends ChangeNotifier {
     var currentJ = 0;
     var exitI = 3;
     var exitJ = 3;
-    var maze = Maze(
-        startI: 0,
-        startJ: 0
-    );
+    var maze = Maze();
     var foundExit = false;
     var correct = 0;
-    var swipesAvailable = 0;
+    // var swipesAvailable = 0;
+    var swipesAvailable = 100;
     var total = 0;
     var flashcards = List<Flashcard>.empty(growable: true);
     var currentFlashCardIndex = 0;

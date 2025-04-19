@@ -10,7 +10,6 @@ import '../common/widgets/game_header.dart';
 import '../common/widgets/navigation_button.dart';
 import '../flashcard/quiz_page.dart';
 
-
 class LevelUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
