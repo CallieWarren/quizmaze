@@ -53,32 +53,32 @@ class MazeView extends StatelessWidget {
     double bottomBorder = borderThin;
     double topBorder = borderThin;
 
-    // if we have visited the cell and there is a wall on the left OR
+    // if we have visited the cell or found exit and there is a wall on the left OR
     // if we have visited the cell to our left and there is a wall on the left
-    if((currentCell.isWallLeft && (currentCell.isVisitedByPlayer || vicinity.column == 0)) ||
+    if((currentCell.isWallLeft && (currentCell.isVisitedByPlayer || vicinity.column == 0 || mazeState.foundExit)) ||
         (vicinity.column > 0 && mazeState.maze.cells.elementAt(vicinity.row).elementAt(vicinity.column - 1).isVisitedByPlayer &&
             currentCell.isWallLeft)
     ) {
       leftBorder = borderHalf;
     }
 
-    // if we have visited the cell and there is a wall on the right OR
+    // if we have visited the cell or found exit and there is a wall on the right OR
     // if we have visited the cell to our right and there is a wall on the right
-    if (currentCell.isWallRight && (currentCell.isVisitedByPlayer || vicinity.column == mazeState.maze.maxRowColumnCount - 1)
+    if (currentCell.isWallRight && (currentCell.isVisitedByPlayer || vicinity.column == mazeState.maze.maxRowColumnCount - 1 || mazeState.foundExit)
         || vicinity.column < mazeState.maze.maxRowColumnCount - 1 && mazeState.maze.cells.elementAt(vicinity.row).elementAt(vicinity.column + 1).isVisitedByPlayer && currentCell.isWallRight
     ) {
       rightBorder = borderHalf;
     }
 
-    // if we have visited the cell and there is a wall on the top OR
+    // if we have visited the cell or found exit  and there is a wall on the top OR
     // if we have visited the cell above and there is a wall on bottom ??
-    if(currentCell.isWallTop && (currentCell.isVisitedByPlayer || vicinity.row == 0) ||
+    if(currentCell.isWallTop && (currentCell.isVisitedByPlayer || vicinity.row == 0 || mazeState.foundExit) ||
         vicinity.row > 0 && mazeState.maze.cells.elementAt(vicinity.row - 1).elementAt(vicinity.column).isVisitedByPlayer && currentCell.isWallTop
       ) {
       topBorder = borderHalf;
     }
 
-    if (currentCell.isWallBottom && (currentCell.isVisitedByPlayer || vicinity.row == mazeState.maze.maxRowColumnCount - 1) ||
+    if (currentCell.isWallBottom && (currentCell.isVisitedByPlayer || vicinity.row == mazeState.maze.maxRowColumnCount - 1 || mazeState.foundExit) ||
         vicinity.row < mazeState.maze.maxRowColumnCount - 1 && mazeState.maze.cells.elementAt(vicinity.row + 1).elementAt(vicinity.column).isVisitedByPlayer && currentCell.isWallBottom) {
       bottomBorder = borderHalf;
     }
@@ -88,6 +88,9 @@ class MazeView extends StatelessWidget {
 
     if(mazeState.foundExit) {
       cellBackground = Color.fromARGB(200, 46, 196, 181);
+      if(currentCell.isWallBottom && currentCell.isWallTop && currentCell.isWallRight && currentCell.isWallLeft) {
+        cellBackground = Colors.black;
+      }
       return TableViewCell(
         child: Consumer(
             builder: (context, ref, _) {
@@ -114,7 +117,7 @@ class MazeView extends StatelessWidget {
       cellBackground = Color.fromARGB(255, 255, 170, 90);
     } else if(currentCell.isVisitedByPlayer) {
       cellBackground = Color.fromARGB(200, 46, 196, 181);
-    } else if(vicinity.row == mazeState.exitI && vicinity.column == mazeState.exitJ) {
+    } else if(vicinity.row == mazeState.maze.exitI && vicinity.column == mazeState.maze.exitJ) {
       cellMarker = AssetImage('assets/treasure_icon.png');
       cellBackground = Color.fromARGB(255, 250,255,129);
     } else {

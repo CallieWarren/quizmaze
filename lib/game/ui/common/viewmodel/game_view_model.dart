@@ -10,8 +10,6 @@ import '../../maze/model/maze.dart';
 class GameViewModel extends ChangeNotifier {
     var currentI = 0;
     var currentJ = 0;
-    var exitI = 3;
-    var exitJ = 3;
     var maze = Maze();
     var foundExit = false;
     var correct = 0;
@@ -57,7 +55,7 @@ class GameViewModel extends ChangeNotifier {
     void move(Direction direction) {
         bool foundWall = false;
         while(!foundExit && !foundWall) {
-            if (exitI == currentI && exitJ == currentJ) {
+            if (maze.exitI == currentI && maze.exitJ == currentJ) {
                 foundExit = true;
                 break;
             }
@@ -118,5 +116,12 @@ class GameViewModel extends ChangeNotifier {
         swipesAvailable += bonusSwipes;
     }
 
+    void buildNewMazeAfterLevelUp() {
+        currentI = 0;
+        currentJ = 0;
+        maze = Maze();
+        foundExit = false;
+        notifyListeners();
+    }
 
 }

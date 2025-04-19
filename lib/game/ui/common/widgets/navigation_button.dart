@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../viewmodel/game_view_model.dart';
 import '../viewmodel/model/destination.dart';
 
 class NavigationButton extends StatelessWidget {
@@ -12,6 +14,7 @@ class NavigationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mazeState = context.watch<GameViewModel>();
     return Row(
       children: [
         Expanded(
@@ -33,6 +36,7 @@ class NavigationButton extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
                 } else if (fromDestination == Destination.levelUp) {
+                  mazeState.buildNewMazeAfterLevelUp();
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );

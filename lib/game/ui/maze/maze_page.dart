@@ -103,7 +103,7 @@ class MazePage extends StatelessWidget {
                         movementDirection = null;
                       }
                     },
-                    child: MazeContainer(mazeState: mazeState),
+                    child: MazeContainer(),
                   ),
                   Row(
                     children: [

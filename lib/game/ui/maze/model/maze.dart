@@ -6,12 +6,14 @@ import 'maze_cell.dart';
 
 class Maze {
 
+  final maxRowColumnCount = 4;
   int startI = 0;
   int startJ = 0;
+  int exitI = 3;
+  int exitJ = 3;
   var cells = List<List<MazeCell>>.empty(growable: true);
   var allWalls = List<Wall>.empty(growable: true);
   var wallsForVisitedCells = List<Wall>.empty(growable: true);
-  final maxRowColumnCount = 4;
 
   void init() {
     // add every wall
@@ -35,12 +37,14 @@ class Maze {
       cells.add(row);
     }
 
+
     wallsForVisitedCells.addAll(allWalls.where((wall) => (wall.i1 == startI && wall.j1 == startJ)));
     cells[startI][startJ].isVisitedForGenerate = true;
     allWalls.removeWhere((wall) =>
     wall.i1 == startI &&
         wall.j1 == startJ);
-    while (allWalls.isNotEmpty) {
+    int cellsVisitedCount = 1;
+    while (cellsVisitedCount < maxRowColumnCount * maxRowColumnCount) {
       // add right and bottom wall to maze list
       bool isWallRemoved = false;
       while (!isWallRemoved) {
@@ -53,11 +57,12 @@ class Maze {
           wallsForVisitedCells.removeAt(removeWallIndex);
           cells[removeWallCandidate.i2][removeWallCandidate.j2].isVisitedForGenerate = true;
           wallsForVisitedCells.addAll(
-              allWalls.where((wall) => (wall.i1 == removeWallCandidate.i2 &&
-                  wall.j1 == removeWallCandidate.j2)));
+              allWalls.where((wall) =>
+              (wall.i1 == removeWallCandidate.i2 && wall.j1 == removeWallCandidate.j2))
+          );
           allWalls.removeWhere((wall) =>
-          wall.i1 == removeWallCandidate.i2 &&
-              wall.j1 == removeWallCandidate.j2);
+          (wall.i1 == removeWallCandidate.i2 && wall.j1 == removeWallCandidate.j2));
+          cellsVisitedCount++;
         }
       }
     }
