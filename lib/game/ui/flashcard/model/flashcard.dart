@@ -4,6 +4,7 @@ class Flashcard{
 
   Flashcard(this.question, this.answer);
   bool isQuestionSide = true;
+  bool isCorrect = false;
 
   void nextSide() {
     isQuestionSide = !isQuestionSide;

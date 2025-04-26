@@ -40,6 +40,13 @@ class NavigationButton extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
+                } else if(fromDestination == Destination.stackComplete) {
+                  Navigator.of(context).pop();
+                } else if (fromDestination == Destination.settings) {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                  );
                 }
               },
               style: ButtonStyle(

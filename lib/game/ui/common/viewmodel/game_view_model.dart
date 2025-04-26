@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 
 import '../../flashcard/model/flashcard.dart';
@@ -17,6 +15,8 @@ class GameViewModel extends ChangeNotifier {
     var total = 0;
     var flashcards = List<Flashcard>.empty(growable: true);
     var currentFlashCardIndex = 0;
+    var isAllCorrect = false;
+    bool isCorrectFlashcardsRemoved = false;
     String category = "";
 
     void setFlashcards(List<Flashcard> flashcards) {
@@ -27,9 +27,25 @@ class GameViewModel extends ChangeNotifier {
         if (isCorrect) {
             correct++;
             swipesAvailable++;
+            flashcards[currentFlashCardIndex].isCorrect = true;
         }
         total++;
-        currentFlashCardIndex++;
+        isAllCorrect = !flashcards.any((card) => !card.isCorrect);
+        if(isCorrectFlashcardsRemoved) {
+            while(!isAllCorrect && flashcards[currentFlashCardIndex].isCorrect) {
+                if(currentFlashCardIndex < flashcards.length - 1) {
+                    currentFlashCardIndex++;
+                } else {
+                    currentFlashCardIndex = 0;
+                }
+            }
+        } else {
+            if(currentFlashCardIndex < flashcards.length - 1) {
+                currentFlashCardIndex++;
+            } else {
+                currentFlashCardIndex = 0;
+            }
+        }
         notifyListeners();
     }
 
@@ -120,12 +136,30 @@ class GameViewModel extends ChangeNotifier {
         swipesAvailable += bonusSwipes;
     }
 
+    void toggleIsCorrectFlashcardsRemoved() {
+        isCorrectFlashcardsRemoved = !isCorrectFlashcardsRemoved;
+        if(isCorrectFlashcardsRemoved) {
+
+        }
+        notifyListeners();
+    }
+
     void buildNewMazeAfterLevelUp() {
         currentI = 0;
         currentJ = 0;
         maze = Maze();
         foundExit = false;
         notifyListeners();
+    }
+
+    void shuffleFlashcards() {
+        flashcards.shuffle();
+    }
+
+    void resetFlashcards() {
+        for (var card in flashcards) {
+          card.isCorrect = false;
+        }
     }
 
 }

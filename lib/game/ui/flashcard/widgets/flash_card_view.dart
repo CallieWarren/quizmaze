@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
-import 'package:quizmaze/game/ui/flashcard/model/flashcard.dart';
 
 class FlashcardView extends StatelessWidget {
-  const FlashcardView({super.key, required this.currentFlashCard});
+  const FlashcardView({super.key});
 
-  final Flashcard? currentFlashCard;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final flashcardStyle = theme.textTheme.displayMedium!.copyWith(
+    final flashcardStyle = theme.textTheme.displaySmall!.copyWith(
       color: Color.fromARGB(255, 47, 48, 44),
     );
     var appState = context.watch<GameViewModel>();
 
     String flashCardText = "";
-    if(currentFlashCard != null) {
-      if (currentFlashCard?.isQuestionSide == true) {
-        flashCardText = currentFlashCard!.question;
+    if(appState.getCurrentFlashcard() != null) {
+      if (appState.getCurrentFlashcard()?.isQuestionSide == true) {
+        flashCardText = appState.getCurrentFlashcard()!.question;
       } else {
-        flashCardText = currentFlashCard!.answer;
+        flashCardText = appState.getCurrentFlashcard()!.answer;
       }
     }
 

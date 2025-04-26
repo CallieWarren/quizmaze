@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../settings/widgets/settings_page.dart';
 import '../viewmodel/game_view_model.dart';
 
 class GameHeader extends StatelessWidget {
@@ -21,6 +21,31 @@ class GameHeader extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
+                  appState.category,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
+                child: Image(image: AssetImage('assets/settings_icon.png')),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
                   swipesText,
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 18, color: Colors.white),
@@ -31,18 +56,6 @@ class GameHeader extends StatelessWidget {
                   'Items Reviewed\n${appState.total}',
                   textAlign: TextAlign.right,
                   style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  appState.category,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ],

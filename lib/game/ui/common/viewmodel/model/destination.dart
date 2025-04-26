@@ -1,3 +1,3 @@
 enum Destination {
-  quiz, maze, levelUp
+  quiz, maze, levelUp, settings, stackComplete
 }

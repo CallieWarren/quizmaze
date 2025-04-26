@@ -9,6 +9,7 @@ import '../../common/viewmodel/model/destination.dart';
 import '../../common/widgets/game_header.dart';
 import '../../common/widgets/navigation_button.dart';
 import '../../maze/maze_page.dart';
+import '../../stack_complete_page.dart';
 import '../model/flashcard.dart';
 import '../quiz_page.dart';
 import 'flash_card_view.dart';
@@ -38,8 +39,13 @@ class QuizStateBuilder extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
-    appState.flashcards = flashcards;
-    appState.category = category;
+    if(appState.flashcards.isEmpty) {
+      flashcards.shuffle();
+      appState.setFlashcards(flashcards);
+      appState.category = category;
+    } else if(appState.isAllCorrect) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => StackCompletePage()));
+    }
 
     return Scaffold(
             backgroundColor: Colors.white,
@@ -56,9 +62,7 @@ class QuizStateBuilder extends State<QuizPage> {
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
-                              child: FlashcardView(
-                                currentFlashCard: appState.getCurrentFlashcard(),
-                              ),
+                              child: FlashcardView(),
                             ),
                           ),
                         ],

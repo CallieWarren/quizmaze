@@ -1,0 +1,103 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import 'common/viewmodel/game_view_model.dart';
+import 'common/viewmodel/model/destination.dart';
+import 'common/widgets/game_header.dart';
+import 'common/widgets/navigation_button.dart';
+import 'flashcard/quiz_page.dart';
+
+
+class StackCompletePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<GameViewModel>();
+
+    var bonusSwipes = Random().nextInt(3) + 2;
+    appState.setBonusSwipes(bonusSwipes);
+
+    final theme = Theme.of(context);
+    final largeText = theme.textTheme.headlineMedium!.copyWith(
+      color: Color.fromARGB(255, 47, 48, 44),
+    );
+
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GameHeader(),
+                Expanded(
+                  flex: 6,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Stack(
+                            children:[
+                              SizedBox(
+                                height: 300,
+                                width: 300,
+                                child: Container(
+                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
+                                    child: SvgPicture.asset('assets/star_filled_icon.svg')
+                                ),
+                              ),
+                              SizedBox(
+                                height: 300,
+                                width: 300,
+                                child: Container(
+                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
+                                    child: SvgPicture.asset('assets/star_outline_icon.svg')
+                                ),
+                              ),
+                                                ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text(
+                                "All flashcards studied!",
+                                style: largeText,
+                              ),
+                              Text(
+                                "$bonusSwipes bonus swipes received",
+                                style: largeText,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                NavigationButton(
+                  buttonText: 'Reset Stack',
+                  fromDestination: Destination.levelUp,
+                  toDestination: Destination.quiz,
+                  toDestinationWidget: QuizPage(),
+                ),
+              ],
+            ),
+          ),
+        )
+    );
+  }
+
+}
