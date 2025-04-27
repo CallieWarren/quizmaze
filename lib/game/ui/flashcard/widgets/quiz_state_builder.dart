@@ -43,8 +43,6 @@ class QuizStateBuilder extends State<QuizPage> {
       flashcards.shuffle();
       appState.setFlashcards(flashcards);
       appState.category = category;
-    } else if(appState.isAllCorrect) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => StackCompletePage()));
     }
 
     return Scaffold(
@@ -79,7 +77,10 @@ class QuizStateBuilder extends State<QuizPage> {
                                 margin: EdgeInsets.fromLTRB(32, 16, 8, 16),
                                 child: FilledButton.icon(
                                   onPressed: () {
-                                    appState.getNextQuestion(false);
+                                    bool isAllCorrect = appState.getNextQuestion(false);
+                                    if(isAllCorrect) {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => StackCompletePage()));
+                                    }
                                   },
                                   icon: const Icon(Icons.close),
                                   label: Text('Incorrect'),
@@ -100,7 +101,10 @@ class QuizStateBuilder extends State<QuizPage> {
                                 margin: EdgeInsets.fromLTRB(8, 16, 32, 16),
                                 child: FilledButton.icon(
                                   onPressed: () {
-                                    appState.getNextQuestion(true);
+                                    bool isAllCorrect = appState.getNextQuestion(true);
+                                    if(isAllCorrect) {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => StackCompletePage()));
+                                    }
                                   },
                                   icon: const Icon(Icons.check),
                                   label: Text('Correct'),

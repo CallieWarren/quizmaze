@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../settings/widgets/settings_page.dart';
@@ -32,12 +33,15 @@ class GameHeader extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pop(context);
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => SettingsPage()),
                   );
                 },
-                child: Image(image: AssetImage('assets/settings_icon.png')),
+                child: SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: SvgPicture.asset('assets/settings_icon.svg'),
+                ),
               ),
             ],
           ),

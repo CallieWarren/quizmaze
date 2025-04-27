@@ -59,7 +59,10 @@ class SettingsPage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                      child: Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          appState.toggleIsCorrectFlashcardsRemoved();
+                        },
                         child: Text(
                           "Correct flashcards are removed ",
                           style: largeText,
@@ -67,16 +70,19 @@ class SettingsPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Switch(
-                    value: appState.isCorrectFlashcardsRemoved,
-                    onChanged: (bool value) {
-                      // This is called when the user toggles the switch.
-                      appState.toggleIsCorrectFlashcardsRemoved();
-                    },
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
+                    child: Switch(
+                      value: appState.isCorrectFlashcardsRemoved,
+                      onChanged: (bool value) {
+                        // This is called when the user toggles the switch.
+                        appState.toggleIsCorrectFlashcardsRemoved();
+                      },
+                    ),
                   ),
                 ],
               ),
-              Expanded(child: Row(children: [Expanded(child: Spacer())])),
+              Spacer(),
               Row(
                 children: [
                   Expanded(

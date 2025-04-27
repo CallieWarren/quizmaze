@@ -16,14 +16,14 @@ class GameViewModel extends ChangeNotifier {
     var flashcards = List<Flashcard>.empty(growable: true);
     var currentFlashCardIndex = 0;
     var isAllCorrect = false;
-    bool isCorrectFlashcardsRemoved = false;
+    bool isCorrectFlashcardsRemoved = true;
     String category = "";
 
     void setFlashcards(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
     }
 
-    void getNextQuestion(bool isCorrect) {
+    bool getNextQuestion(bool isCorrect) {
         if (isCorrect) {
             correct++;
             swipesAvailable++;
@@ -32,6 +32,7 @@ class GameViewModel extends ChangeNotifier {
         total++;
         isAllCorrect = !flashcards.any((card) => !card.isCorrect);
         if(isCorrectFlashcardsRemoved) {
+            currentFlashCardIndex++;
             while(!isAllCorrect && flashcards[currentFlashCardIndex].isCorrect) {
                 if(currentFlashCardIndex < flashcards.length - 1) {
                     currentFlashCardIndex++;
@@ -46,7 +47,10 @@ class GameViewModel extends ChangeNotifier {
                 currentFlashCardIndex = 0;
             }
         }
-        notifyListeners();
+        if(!isAllCorrect) {
+            notifyListeners();
+        }
+        return isAllCorrect;
     }
 
     void getNextSide() {
@@ -138,9 +142,6 @@ class GameViewModel extends ChangeNotifier {
 
     void toggleIsCorrectFlashcardsRemoved() {
         isCorrectFlashcardsRemoved = !isCorrectFlashcardsRemoved;
-        if(isCorrectFlashcardsRemoved) {
-
-        }
         notifyListeners();
     }
 
@@ -160,6 +161,7 @@ class GameViewModel extends ChangeNotifier {
         for (var card in flashcards) {
           card.isCorrect = false;
         }
+        isAllCorrect = false;
     }
 
 }

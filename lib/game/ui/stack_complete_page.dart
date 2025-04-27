@@ -10,7 +10,6 @@ import 'common/widgets/game_header.dart';
 import 'common/widgets/navigation_button.dart';
 import 'flashcard/quiz_page.dart';
 
-
 class StackCompletePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -25,79 +24,79 @@ class StackCompletePage extends StatelessWidget {
     );
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GameHeader(),
-                Expanded(
-                  flex: 6,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GameHeader(),
+              Expanded(
+                flex: 6,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: 300,
+                              width: 300,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
+                                child: SvgPicture.asset(
+                                  'assets/star_filled_icon.svg',
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 300,
+                              width: 300,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
+                                child: SvgPicture.asset(
+                                  'assets/star_outline_icon.svg',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Center(
-                          child: Stack(
-                            children:[
-                              SizedBox(
-                                height: 300,
-                                width: 300,
-                                child: Container(
-                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
-                                    child: SvgPicture.asset('assets/star_filled_icon.svg')
-                                ),
-                              ),
-                              SizedBox(
-                                height: 300,
-                                width: 300,
-                                child: Container(
-                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
-                                    child: SvgPicture.asset('assets/star_outline_icon.svg')
-                                ),
-                              ),
-                                                ],
-                          ),
+                        child: Column(
+                          children: [
+                            Text("All flashcards studied!", style: largeText),
+                            Text(
+                              "$bonusSwipes bonus swipes received",
+                              style: largeText,
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                "All flashcards studied!",
-                                style: largeText,
-                              ),
-                              Text(
-                                "$bonusSwipes bonus swipes received",
-                                style: largeText,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                NavigationButton(
-                  buttonText: 'Reset Stack',
-                  fromDestination: Destination.levelUp,
-                  toDestination: Destination.quiz,
-                  toDestinationWidget: QuizPage(),
-                ),
-              ],
-            ),
+              ),
+              NavigationButton(
+                buttonText: 'Reset Stack',
+                fromDestination: Destination.stackComplete,
+                toDestination: Destination.quiz,
+                toDestinationWidget: QuizPage(),
+              ),
+            ],
           ),
-        )
+        ),
+      ),
     );
   }
-
 }

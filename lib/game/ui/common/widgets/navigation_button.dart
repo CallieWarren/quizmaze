@@ -37,10 +37,12 @@ class NavigationButton extends StatelessWidget {
                   );
                 } else if (fromDestination == Destination.levelUp) {
                   mazeState.buildNewMazeAfterLevelUp();
+                  Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
                 } else if(fromDestination == Destination.stackComplete) {
+                  mazeState.resetFlashcards();
                   Navigator.of(context).pop();
                 } else if (fromDestination == Destination.settings) {
                   Navigator.of(context).pop();

@@ -8,7 +8,7 @@ import '../common/viewmodel/game_view_model.dart';
 import '../common/viewmodel/model/destination.dart';
 import '../common/widgets/game_header.dart';
 import '../common/widgets/navigation_button.dart';
-import '../flashcard/quiz_page.dart';
+import '../maze/maze_page.dart';
 
 class LevelUpPage extends StatelessWidget {
   @override
@@ -89,8 +89,8 @@ class LevelUpPage extends StatelessWidget {
                 NavigationButton(
                   buttonText: 'Next Level',
                   fromDestination: Destination.levelUp,
-                  toDestination: Destination.quiz,
-                  toDestinationWidget: QuizPage(),
+                  toDestination: Destination.maze,
+                  toDestinationWidget: MazePage(),
                 ),
               ],
             ),
