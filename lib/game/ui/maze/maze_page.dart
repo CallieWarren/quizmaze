@@ -45,7 +45,7 @@ class MazePage extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   GestureDetector(
                     onHorizontalDragUpdate: (details) {
@@ -122,6 +122,7 @@ class MazePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Spacer(),
                   navButton,
                 ],
               ),

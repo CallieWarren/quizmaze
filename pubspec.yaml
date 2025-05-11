@@ -46,6 +46,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
 
   # The "flutter_lints" package below contains a set of
   # encourage good coding practices. The lint set provided by the package is
@@ -55,6 +57,11 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
   json_serializable: ^6.9.4
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -99,3 +106,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+
