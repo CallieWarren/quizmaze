@@ -19,7 +19,11 @@ class StackCompletePage extends StatelessWidget {
     if(appState.bonusSwipesEnabled) {
       var bonusSwipes = Random().nextInt(3) + 1;
       appState.setBonusSwipes(bonusSwipes);
-      bonusSwipesText = "$bonusSwipes bonus swipes received";
+      var swipesText = "swipes";
+      if(appState.bonusSwipesReceived == 1) {
+        swipesText = "swipe";
+      }
+      bonusSwipesText = "$bonusSwipes bonus $swipesText received";
     }
 
     final theme = Theme.of(context);

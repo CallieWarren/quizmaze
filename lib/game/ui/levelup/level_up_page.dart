@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../common/viewmodel/game_view_model.dart';
@@ -21,84 +18,99 @@ class LevelUpPage extends StatelessWidget {
     );
 
     var bonusSwipesText = "";
-    if(appState.bonusSwipesEnabled) {
-      bonusSwipesText = "${appState.bonusSwipesReceived} bonus swipes received";
+    if (appState.bonusSwipesEnabled) {
+      var swipesText = "swipes";
+      if(appState.bonusSwipesReceived == 1) {
+        swipesText = "swipe";
+      }
+      bonusSwipesText = "${appState.bonusSwipesReceived} bonus $swipesText received";
     }
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GameHeader(),
-                Expanded(
-                  flex: 6,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GameHeader(),
+              Expanded(
+                flex: 6,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: 300,
+                              width: 300,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(200, 46, 196, 181),
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 8.0,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: Image(
+                                        image: AssetImage(
+                                          'assets/success_icon.png',
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Image(
+                                        image: AssetImage(
+                                          'assets/treasure_open_icon.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Center(
-                          child: Stack(
-                            children:[
-                              SizedBox(
-                                height: 300,
-                                width: 300,
-                                child: Container(
-                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
-                                    child: SvgPicture.asset('assets/star_filled_icon.svg')
-                                ),
-                              ),
-                              SizedBox(
-                                height: 300,
-                                width: 300,
-                                child: Container(
-                                    margin: EdgeInsets.fromLTRB(16, 20, 16, 16),
-                                    child: SvgPicture.asset('assets/star_outline_icon.svg')
-                                ),
-                              ),
-                                                ],
-                          ),
+                        child: Column(
+                          children: [
+                            Text("Maze complete!", style: largeText),
+                            Text(bonusSwipesText, style: largeText),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                "Maze complete!",
-                                style: largeText,
-                              ),
-                              Text(
-                                bonusSwipesText,
-                                style: largeText,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                NavigationButton(
-                  buttonText: 'Next Level',
-                  fromDestination: Destination.levelUp,
-                  toDestination: Destination.maze,
-                  toDestinationWidget: MazePage(),
-                ),
-              ],
-            ),
+              ),
+              NavigationButton(
+                buttonText: 'Next Level',
+                fromDestination: Destination.levelUp,
+                toDestination: Destination.maze,
+                toDestinationWidget: MazePage(),
+              ),
+            ],
           ),
-        )
+        ),
+      ),
     );
   }
-
 }
