@@ -17,6 +17,7 @@ class GameViewModel extends ChangeNotifier {
     var currentFlashCardIndex = 0;
     var isAllCorrect = false;
     var bonusSwipesReceived = 0;
+    var bonusSwipesEnabled = true;
     bool isCorrectFlashcardsRemoved = true;
     String category = "";
 
@@ -30,23 +31,16 @@ class GameViewModel extends ChangeNotifier {
             swipesAvailable++;
             flashcards[currentFlashCardIndex].isCorrect = true;
         }
+        flashcards[currentFlashCardIndex].isQuestionSide = true;
         total++;
         isAllCorrect = !flashcards.any((card) => !card.isCorrect);
         if(isCorrectFlashcardsRemoved) {
-            currentFlashCardIndex++;
+            updateCurrentFlashcardIndex();
             while(!isAllCorrect && flashcards[currentFlashCardIndex].isCorrect) {
-                if(currentFlashCardIndex < flashcards.length - 1) {
-                    currentFlashCardIndex++;
-                } else {
-                    currentFlashCardIndex = 0;
-                }
+                updateCurrentFlashcardIndex();
             }
         } else {
-            if(currentFlashCardIndex < flashcards.length - 1) {
-                currentFlashCardIndex++;
-            } else {
-                currentFlashCardIndex = 0;
-            }
+            updateCurrentFlashcardIndex();
         }
         if(!isAllCorrect) {
             notifyListeners();
@@ -129,6 +123,14 @@ class GameViewModel extends ChangeNotifier {
         notifyListeners();
     }
 
+    void updateCurrentFlashcardIndex() {
+        if(currentFlashCardIndex < flashcards.length - 1) {
+            currentFlashCardIndex++;
+        } else {
+            currentFlashCardIndex = 0;
+        }
+    }
+
     String getSwipeText(int swipesAvailable) {
         if (swipesAvailable == 1) {
             return 'Swipe';
@@ -144,6 +146,11 @@ class GameViewModel extends ChangeNotifier {
 
     void toggleIsCorrectFlashcardsRemoved() {
         isCorrectFlashcardsRemoved = !isCorrectFlashcardsRemoved;
+        notifyListeners();
+    }
+
+    void toggleBonusSwipesEnabled() {
+        bonusSwipesEnabled = !bonusSwipesEnabled;
         notifyListeners();
     }
 

@@ -20,6 +20,11 @@ class LevelUpPage extends StatelessWidget {
       color: Color.fromARGB(255, 47, 48, 44),
     );
 
+    var bonusSwipesText = "";
+    if(appState.bonusSwipesEnabled) {
+      bonusSwipesText = "${appState.bonusSwipesReceived} bonus swipes received";
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -73,7 +78,7 @@ class LevelUpPage extends StatelessWidget {
                                 style: largeText,
                               ),
                               Text(
-                                "${appState.bonusSwipesReceived} bonus swipes received",
+                                bonusSwipesText,
                                 style: largeText,
                               ),
                             ],

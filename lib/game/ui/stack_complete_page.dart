@@ -15,8 +15,12 @@ class StackCompletePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
 
-    var bonusSwipes = Random().nextInt(3) + 2;
-    appState.setBonusSwipes(bonusSwipes);
+    var bonusSwipesText = "";
+    if(appState.bonusSwipesEnabled) {
+      var bonusSwipes = Random().nextInt(3) + 1;
+      appState.setBonusSwipes(bonusSwipes);
+      bonusSwipesText = "$bonusSwipes bonus swipes received";
+    }
 
     final theme = Theme.of(context);
     final largeText = theme.textTheme.headlineMedium!.copyWith(
@@ -77,7 +81,7 @@ class StackCompletePage extends StatelessWidget {
                           children: [
                             Text("All flashcards studied!", style: largeText),
                             Text(
-                              "$bonusSwipes bonus swipes received",
+                              bonusSwipesText,
                               style: largeText,
                             ),
                           ],

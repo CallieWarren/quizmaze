@@ -82,6 +82,34 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ],
               ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                      child: InkWell(
+                        onTap: () {
+                          appState.toggleBonusSwipesEnabled();
+                        },
+                        child: Text(
+                          "Bonus swipes enabled",
+                          style: largeText,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
+                    child: Switch(
+                      value: appState.bonusSwipesEnabled,
+                      onChanged: (bool value) {
+                        // This is called when the user toggles the switch.
+                        appState.toggleBonusSwipesEnabled();
+                      },
+                    ),
+                  ),
+                ],
+              ),
               Spacer(),
               Row(
                 children: [

@@ -29,8 +29,10 @@ class NavigationButton extends StatelessWidget {
                   if(toDestination == Destination.quiz) {
                     Navigator.of(context).pop();
                   } else if(toDestination == Destination.levelUp) {
-                    var bonusSwipes = Random().nextInt(3) + 2;
-                    mazeState.setBonusSwipes(bonusSwipes);
+                    if(mazeState.bonusSwipesEnabled) {
+                      var bonusSwipes = Random().nextInt(3) + 1;
+                      mazeState.setBonusSwipes(bonusSwipes);
+                    }
                     Navigator.of(context).pop();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => toDestinationWidget),
