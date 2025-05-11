@@ -16,6 +16,7 @@ class MazeView extends StatelessWidget {
   final double borderWhole = 8.0;
   final double borderHalf = 4.0;
   final double borderThin = 1.0;
+  final double mazeCellWidth = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +191,7 @@ class MazeView extends StatelessWidget {
       trailingBorderWidth = borderWhole;
     }
     return TableSpan(
-      extent: FixedTableSpanExtent(75),
+      extent: FixedTableSpanExtent(mazeCellWidth),
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(
@@ -216,7 +217,7 @@ class MazeView extends StatelessWidget {
       trailingBorderWidth = borderWhole;
     }
     return TableSpan(
-      extent: FixedTableSpanExtent(75),
+      extent: FixedTableSpanExtent(mazeCellWidth),
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(

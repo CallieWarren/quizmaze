@@ -6,11 +6,12 @@ import 'maze_cell.dart';
 
 class Maze {
 
-  final maxRowColumnCount = 4;
+  final maxRowColumnCount = 5;
+
   int startI = 0;
   int startJ = 0;
-  int exitI = 3;
-  int exitJ = 3;
+  int exitI = 4;
+  int exitJ = 4;
   var cells = List<List<MazeCell>>.empty(growable: true);
   var allWalls = List<Wall>.empty(growable: true);
   var wallsForVisitedCells = List<Wall>.empty(growable: true);
