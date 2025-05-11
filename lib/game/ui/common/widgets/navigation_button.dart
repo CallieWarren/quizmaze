@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +29,9 @@ class NavigationButton extends StatelessWidget {
                   if(toDestination == Destination.quiz) {
                     Navigator.of(context).pop();
                   } else if(toDestination == Destination.levelUp) {
+                    var bonusSwipes = Random().nextInt(3) + 2;
+                    mazeState.setBonusSwipes(bonusSwipes);
+                    Navigator.of(context).pop();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => toDestinationWidget),
                     );

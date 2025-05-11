@@ -15,9 +15,6 @@ class LevelUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<GameViewModel>();
 
-    var bonusSwipes = Random().nextInt(3) + 2;
-    appState.setBonusSwipes(bonusSwipes);
-
     final theme = Theme.of(context);
     final largeText = theme.textTheme.headlineMedium!.copyWith(
       color: Color.fromARGB(255, 47, 48, 44),
@@ -76,7 +73,7 @@ class LevelUpPage extends StatelessWidget {
                                 style: largeText,
                               ),
                               Text(
-                                "$bonusSwipes bonus swipes received",
+                                "${appState.bonusSwipesReceived} bonus swipes received",
                                 style: largeText,
                               ),
                             ],

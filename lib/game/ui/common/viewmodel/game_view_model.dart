@@ -16,6 +16,7 @@ class GameViewModel extends ChangeNotifier {
     var flashcards = List<Flashcard>.empty(growable: true);
     var currentFlashCardIndex = 0;
     var isAllCorrect = false;
+    var bonusSwipesReceived = 0;
     bool isCorrectFlashcardsRemoved = true;
     String category = "";
 
@@ -137,6 +138,7 @@ class GameViewModel extends ChangeNotifier {
     }
 
     void setBonusSwipes(int bonusSwipes) {
+        bonusSwipesReceived = bonusSwipes;
         swipesAvailable += bonusSwipes;
     }
 
