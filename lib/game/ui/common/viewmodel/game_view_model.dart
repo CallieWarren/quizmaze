@@ -164,6 +164,8 @@ class GameViewModel extends ChangeNotifier {
           card.isCorrect = false;
         }
         isAllCorrect = false;
+        flashcards.shuffle();
+        currentFlashCardIndex = 0;
     }
 
 }
