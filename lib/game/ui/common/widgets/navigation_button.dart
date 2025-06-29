@@ -56,6 +56,10 @@ class NavigationButton extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
+                } else if(fromDestination == Destination.firstPage) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                  );
                 }
               },
               style: ButtonStyle(

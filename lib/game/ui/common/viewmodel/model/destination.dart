@@ -1,3 +1,3 @@
 enum Destination {
-  quiz, maze, levelUp, settings, stackComplete
+  quiz, maze, levelUp, settings, stackComplete, firstPage, inputFlashcards
 }
