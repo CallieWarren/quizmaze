@@ -20,9 +20,12 @@ class GameViewModel extends ChangeNotifier {
     var bonusSwipesEnabled = true;
     bool isCorrectFlashcardsRemoved = true;
     String category = "";
+    String jsonText = "";
 
-    void setFlashcards(List<Flashcard> flashcards) {
+    void setFlashcards(List<Flashcard> flashcards, String category) {
         this.flashcards = flashcards;
+        this.category = category;
+        notifyListeners();
     }
 
     bool getNextQuestion(bool isCorrect) {
@@ -173,6 +176,14 @@ class GameViewModel extends ChangeNotifier {
         isAllCorrect = false;
         flashcards.shuffle();
         currentFlashCardIndex = 0;
+    }
+
+    void clearFlashcards() {
+        flashcards = List<Flashcard>.empty(growable: true);
+        currentFlashCardIndex = 0;
+        isAllCorrect = false;
+        jsonText = "";
+        category = "";
     }
 
 }

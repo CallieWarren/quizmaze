@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quizmaze/game/ui/first_screen/widgets/input_flashcards_page.dart';
 
+import '../../common/viewmodel/game_view_model.dart';
 import '../../common/viewmodel/model/destination.dart';
 import '../../common/widgets/navigation_button.dart';
 import '../../flashcard/quiz_page.dart';

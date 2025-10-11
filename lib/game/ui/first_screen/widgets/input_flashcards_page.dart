@@ -1,6 +1,10 @@
 // Create a Form widget.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../common/viewmodel/game_view_model.dart';
+import '../../flashcard/quiz_page.dart';
 
 class InputFlashcardsPage extends StatefulWidget {
   const InputFlashcardsPage({super.key});
@@ -30,6 +34,7 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
 
   @override
   void dispose() {
+    _titleController.dispose();
     _subjectController.dispose();
     _aiOutputController.dispose();
     super.dispose();
@@ -37,6 +42,7 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<GameViewModel>();
     final theme = Theme.of(context);
     final smallHeadline = theme.textTheme.headlineSmall!.copyWith(
       color: Color.fromARGB(255, 47, 48, 44),
@@ -45,182 +51,188 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
     return Material(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(16, 16, 8, 16),
-                        child: Text(
-                          "1. Name your flashcard stack subject",
-                          style: smallHeadline,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.all(16),
-                        child: TextFormField(
-                          controller: _titleController,
-                          decoration: const InputDecoration(
-                            hintText: 'Name your flashcard stack',
-                            labelText: 'Flashcard Stack Subject',
-                          ),
-                          // The validator receives the text that the user has entered.
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(16, 0, 16, 8),
-                        child: Text(
-                          "2. Describe exactly the type of flashcards you're looking for as a part of the AI prompt",
-                          style: smallHeadline,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        child: TextFormField(
-                          controller: _subjectController,
-                          decoration: const InputDecoration(
-                            hintText:
-                                'Describe the type of flashcards you want in your flashcard stack',
-                            labelText: 'Flashcard Stack Details',
-                          ),
-                          // The validator receives the text that the user has entered.
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(16, 0, 16, 8),
-                        child: Text(
-                          "3. Copy the prompt and paste into ChatGPT or other AI to produce a stack of flashcards",
-                          style: smallHeadline,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 64,
-                        margin: EdgeInsets.all(16),
-                        child: TextButton(
-                          onPressed: () {
-                            String subjectText = _subjectController.text;
-                            String prompt =
-                                '''Can you please create json text about the subject $subjectText with 100 flashcards or less? It should match the following format exactly:
-                              {
-                              "Category": "MLB Locations and Team Names",
-                              "Flashcards": [
-                              {
-                              "Question": "Arizona",
-                              "Answer": "Diamondbacks"
-                              },
-                              }''';
-                            // Validate returns true if the form is valid, or false otherwise.
-                            if (_formKey.currentState!.validate()) {
-                              Clipboard.setData(
-                                ClipboardData(text: prompt),
-                              ).then((_) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "AI prompt copied to clipboard",
-                                    ),
-                                  ),
-                                );
-                              });
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Missing text in title or description fields',
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll<Color>(
-                              Color.fromARGB(255, 255, 170, 90),
-                            ),
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                          ),
+        body: SingleChildScrollView(
+          clipBehavior: Clip.hardEdge,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(16, 16, 8, 16),
                           child: Text(
-                            "Copy AI Prompt",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 47, 48, 44),
-                              fontSize: 24,
-                            ),
+                            "1. Name your flashcard stack subject",
+                            style: smallHeadline,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(16, 0, 8, 16),
-                        child: Text(
-                          "4. Paste AI output in the text field below",
-                          style: smallHeadline,
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.all(16),
+                          child: TextFormField(
+                            controller: _titleController,
+                            maxLines: null,
+                            decoration: const InputDecoration(
+                              hintText: 'Name your flashcard stack',
+                              labelText: 'Flashcard Stack Subject',
+                            ),
+                            // The validator receives the text that the user has entered.
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Row(
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                          child: Text(
+                            "2. Describe exactly the type of flashcards you're looking for as a part of the AI prompt",
+                            style: smallHeadline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
                     children: [
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
                           child: TextFormField(
+                            controller: _subjectController,
+                            maxLines: null,
+                            decoration: const InputDecoration(
+                              hintText:
+                                  'Describe the type of flashcards you want in your flashcard stack',
+                              labelText: 'Flashcard Stack Details',
+                            ),
+                            // The validator receives the text that the user has entered.
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                          child: Text(
+                            "3. Copy the prompt and paste into ChatGPT or other AI to produce a stack of flashcards",
+                            style: smallHeadline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 64,
+                          margin: EdgeInsets.all(16),
+                          child: TextButton(
+                            onPressed: () {
+                              String subjectText = _subjectController.text;
+                              String prompt =
+                                  '''Can you please create json text about the subject $subjectText with 100 flashcards or less? It should match the following format exactly:
+                                {
+                                "Category": "MLB Locations and Team Names",
+                                "Flashcards": [
+                                {
+                                "Question": "Arizona",
+                                "Answer": "Diamondbacks"
+                                },
+                                }''';
+                              // Validate returns true if the form is valid, or false otherwise.
+                              if (_formKey.currentState?.validate() == true) {
+                                Clipboard.setData(
+                                  ClipboardData(text: prompt),
+                                ).then((_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        "AI prompt copied to clipboard",
+                                      ),
+                                    ),
+                                  );
+                                });
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "Please enter text for section 1 and 2",
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll<Color>(
+                                Color.fromARGB(255, 255, 170, 90),
+                              ),
+                              shape: WidgetStateProperty.all<
+                                RoundedRectangleBorder
+                              >(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              "Copy AI Prompt",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 47, 48, 44),
+                                fontSize: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(16, 0, 8, 16),
+                          child: Text(
+                            "4. Paste AI output in the text field below",
+                            style: smallHeadline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                          child: TextFormField(
+                            controller: _aiOutputController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: const InputDecoration(
@@ -232,8 +244,57 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
                       ),
                     ],
                   ),
-                ),
-              ],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 84,
+                          margin: EdgeInsets.all(16),
+                          child: TextButton(
+                            onPressed: () {
+                              String aiOutputText = _aiOutputController.text;
+                              if(aiOutputText.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      "Please input flashcard stack from AI",
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                appState.jsonText = aiOutputText;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) => QuizPage()),
+                                );
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll<Color>(
+                                Color.fromARGB(255, 255, 170, 90),
+                              ),
+                              shape: WidgetStateProperty.all<
+                                RoundedRectangleBorder
+                              >(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              "Submit Flashcards and Continue",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 47, 48, 44),
+                                fontSize: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

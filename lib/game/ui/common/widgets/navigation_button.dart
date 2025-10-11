@@ -57,6 +57,7 @@ class NavigationButton extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
                 } else if(fromDestination == Destination.firstPage) {
+                  mazeState.clearFlashcards();
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
