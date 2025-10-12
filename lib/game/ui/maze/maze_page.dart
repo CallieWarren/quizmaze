@@ -110,7 +110,6 @@ class MazePage extends StatelessWidget {
                       Expanded(
                         child: Container(
                           margin: const EdgeInsets.all(16),
-                          padding: const EdgeInsets.all(16),
                           child: Center(
                             child: Text(
                               '${mazeState.getSwipeText(mazeState.swipesAvailable)} Remaining\n${mazeState.swipesAvailable}',

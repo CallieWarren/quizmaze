@@ -263,6 +263,7 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
                                 );
                               } else {
                                 appState.jsonText = aiOutputText;
+                                Navigator.of(context).pop();
                                 Navigator.of(context).push(
                                   MaterialPageRoute(builder: (context) => QuizPage()),
                                 );

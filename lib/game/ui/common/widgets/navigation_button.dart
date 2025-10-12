@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/game_mode.dart';
 import '../viewmodel/game_view_model.dart';
 import '../viewmodel/model/destination.dart';
 
@@ -57,6 +58,13 @@ class NavigationButton extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
                 } else if(fromDestination == Destination.firstPage) {
+                  if(buttonText == "Demo Mode") {
+                    mazeState.setGameMode(GameMode.demo);
+                  } else if (buttonText == "Continue Quiz") {
+                    mazeState.setGameMode(GameMode.continueGame);
+                  } else if (buttonText == "Change Flashcards") {
+                    mazeState.setGameMode(GameMode.newGame);
+                  }
                   mazeState.clearFlashcards();
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),

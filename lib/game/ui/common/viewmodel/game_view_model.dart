@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../../common/game_mode.dart';
 import '../../flashcard/model/flashcard.dart';
 import '../../maze/model/direction.dart';
 import '../../maze/model/maze.dart';
@@ -21,6 +22,8 @@ class GameViewModel extends ChangeNotifier {
     bool isCorrectFlashcardsRemoved = true;
     String category = "";
     String jsonText = "";
+    GameMode gameMode = GameMode.demo;
+    bool isContinueAvailable = false;
 
     void setFlashcards(List<Flashcard> flashcards, String category) {
         this.flashcards = flashcards;
@@ -184,6 +187,15 @@ class GameViewModel extends ChangeNotifier {
         isAllCorrect = false;
         jsonText = "";
         category = "";
+    }
+
+    void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    void setIsContinueAvailable(bool isContinueAvailable) {
+        this.isContinueAvailable = isContinueAvailable;
+        notifyListeners();
     }
 
 }

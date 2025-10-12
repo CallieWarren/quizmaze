@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizmaze/game/common/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common/game_mode.dart';
 import '../../common/viewmodel/game_view_model.dart';
 import '../../common/viewmodel/model/destination.dart';
 import '../../common/widgets/game_header.dart';
@@ -18,20 +21,42 @@ class QuizStateBuilder extends State<QuizPage> {
   Future<void> loadFlashcards() async {
     var appState = context.read<GameViewModel>();
     String jsonText = "";
-    if (appState.jsonText.isNotEmpty == true) {
+    if (appState.gameMode == GameMode.newGame) {
       jsonText = appState.jsonText;
-    } else {
+      var parsed = await json.decode(jsonText);
+      var flashcards =
+      (parsed[KEY_FLASHCARDS] as List)
+          .map((e) => Flashcard.fromJson(e))
+          .toList();
+      var category = parsed[KEY_CATEGORY];
+      appState.setFlashcards(flashcards, category);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString(KEY_FLASHCARDS, jsonText);
+      prefs.setString(KEY_CATEGORY, category);
+      appState.setIsContinueAvailable(true);
+    } else if (appState.gameMode == GameMode.demo) {
       jsonText = await DefaultAssetBundle.of(
         context,
       ).loadString("assets/mlb_flashcards.json");
-    }
-    var parsed = await json.decode(jsonText);
-    var flashcards =
-        (parsed['Flashcards'] as List)
+      var parsed = await json.decode(jsonText);
+      var flashcards =
+      (parsed[KEY_FLASHCARDS] as List)
+          .map((e) => Flashcard.fromJson(e))
+          .toList();
+      var category = parsed[KEY_CATEGORY];
+      appState.setFlashcards(flashcards, category);
+    } else if (appState.gameMode == GameMode.continueGame)  {
+      final prefs = await SharedPreferences.getInstance();
+      var parsed = await json.decode(prefs.getString(KEY_FLASHCARDS) ?? "");
+      if(parsed.isNotEmpty) {
+        var flashcards =
+        (parsed[KEY_FLASHCARDS] as List)
             .map((e) => Flashcard.fromJson(e))
             .toList();
-    var category = parsed['Category'];
-    appState.setFlashcards(flashcards, category);
+        var category = prefs.getString(KEY_CATEGORY) ?? "";
+        appState.setFlashcards(flashcards, category);
+      }
+    }
   }
 
 
