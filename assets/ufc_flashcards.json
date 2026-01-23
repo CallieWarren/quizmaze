@@ -1,0 +1,205 @@
+{
+  "Category": "UFC Vocabulary Guide",
+  "Flashcards": [
+    {
+      "Question": "Octagon",
+      "Answer": "The eight-sided cage used for UFC fights."
+    },
+    {
+      "Question": "Round",
+      "Answer": "A timed segment of a fight, usually 5 minutes."
+    },
+    {
+      "Question": "Main Event",
+      "Answer": "The featured final fight on a card."
+    },
+    {
+      "Question": "Co-Main Event",
+      "Answer": "The second-biggest fight on the card."
+    },
+    {
+      "Question": "Undercard",
+      "Answer": "The fights before the main event."
+    },
+    {
+      "Question": "Prelims",
+      "Answer": "Preliminary fights shown before the main card."
+    },
+    {
+      "Question": "Main Card",
+      "Answer": "The headline group of fights on the event."
+    },
+    {
+      "Question": "Weight Class",
+      "Answer": "A division based on fighter weight limits."
+    },
+    {
+      "Question": "Weigh-In",
+      "Answer": "Official pre-fight check of fighter weight."
+    },
+    {
+      "Question": "Catchweight",
+      "Answer": "A fight agreed on at a non-standard weight."
+    },
+    {
+      "Question": "Champion",
+      "Answer": "The title holder in a weight class."
+    },
+    {
+      "Question": "Title Fight",
+      "Answer": "A bout contested for a championship belt."
+    },
+    {
+      "Question": "Interim Title",
+      "Answer": "A temporary belt when the champion is unavailable."
+    },
+    {
+      "Question": "Contender",
+      "Answer": "A fighter close to earning a title shot."
+    },
+    {
+      "Question": "Rankings",
+      "Answer": "Official list ordering fighters in each division."
+    },
+    {
+      "Question": "Fight Camp",
+      "Answer": "The training period leading up to a fight."
+    },
+    {
+      "Question": "Walkout",
+      "Answer": "A fighter’s entrance to the cage."
+    },
+    {
+      "Question": "Corner",
+      "Answer": "The team that coaches the fighter during a bout."
+    },
+    {
+      "Question": "Referee",
+      "Answer": "The official who enforces rules in the fight."
+    },
+    {
+      "Question": "Judges",
+      "Answer": "Officials who score the fight if it goes to decision."
+    },
+    {
+      "Question": "Decision",
+      "Answer": "A result determined by judges after all rounds."
+    },
+    {
+      "Question": "Unanimous Decision",
+      "Answer": "All judges score the fight for the same fighter."
+    },
+    {
+      "Question": "Split Decision",
+      "Answer": "Two judges pick one fighter, one picks the other."
+    },
+    {
+      "Question": "Majority Decision",
+      "Answer": "Two judges pick one fighter, one scores a draw."
+    },
+    {
+      "Question": "Draw",
+      "Answer": "A tied fight based on the judges’ scorecards."
+    },
+    {
+      "Question": "Knockout (KO)",
+      "Answer": "A finish where a fighter is knocked unconscious."
+    },
+    {
+      "Question": "Technical Knockout (TKO)",
+      "Answer": "A stoppage due to damage or inability to defend."
+    },
+    {
+      "Question": "Submission",
+      "Answer": "A finish by tap out or verbal surrender."
+    },
+    {
+      "Question": "Tap Out",
+      "Answer": "Signaling submission by tapping the opponent or mat."
+    },
+    {
+      "Question": "Choke",
+      "Answer": "A submission that cuts off blood or air."
+    },
+    {
+      "Question": "Armbar",
+      "Answer": "A joint lock that targets the elbow."
+    },
+    {
+      "Question": "Guillotine",
+      "Answer": "A front choke applied around the neck."
+    },
+    {
+      "Question": "Rear-Naked Choke",
+      "Answer": "A choke applied from back control."
+    },
+    {
+      "Question": "Ground and Pound",
+      "Answer": "Striking an opponent while on the ground."
+    },
+    {
+      "Question": "Takedown",
+      "Answer": "Bringing an opponent from standing to the mat."
+    },
+    {
+      "Question": "Sprawl",
+      "Answer": "A defensive move to stop a takedown attempt."
+    },
+    {
+      "Question": "Clinch",
+      "Answer": "Close-range grappling position while standing."
+    },
+    {
+      "Question": "Cage Control",
+      "Answer": "Using the fence to position and pressure an opponent."
+    },
+    {
+      "Question": "Guard",
+      "Answer": "Bottom position using legs to control an opponent."
+    },
+    {
+      "Question": "Mount",
+      "Answer": "Top position sitting on the opponent’s torso."
+    },
+    {
+      "Question": "Back Control",
+      "Answer": "Position behind an opponent, often for submissions."
+    },
+    {
+      "Question": "Sweep",
+      "Answer": "Reversing position from bottom to top."
+    },
+    {
+      "Question": "Scramble",
+      "Answer": "Rapid movement battle for position in grappling."
+    },
+    {
+      "Question": "Striking",
+      "Answer": "Punches, kicks, elbows, and knees used to attack."
+    },
+    {
+      "Question": "Jab",
+      "Answer": "A quick straight lead-hand punch."
+    },
+    {
+      "Question": "Cross",
+      "Answer": "A straight rear-hand punch."
+    },
+    {
+      "Question": "Leg Kick",
+      "Answer": "A kick aimed at the opponent’s thigh or calf."
+    },
+    {
+      "Question": "Elbow Strike",
+      "Answer": "A close-range strike using the elbow."
+    },
+    {
+      "Question": "Low Blow",
+      "Answer": "An illegal strike to the groin area."
+    },
+    {
+      "Question": "Point Deduction",
+      "Answer": "A penalty subtracted from a fighter’s score."
+    }
+  ]
+}

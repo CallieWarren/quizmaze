@@ -37,7 +37,7 @@ class QuizStateBuilder extends State<QuizPage> {
     } else if (appState.gameMode == GameMode.demo) {
       jsonText = await DefaultAssetBundle.of(
         context,
-      ).loadString("assets/mlb_flashcards.json");
+      ).loadString("assets/ufc_flashcards.json");
       var parsed = await json.decode(jsonText);
       var flashcards =
       (parsed[KEY_FLASHCARDS] as List)

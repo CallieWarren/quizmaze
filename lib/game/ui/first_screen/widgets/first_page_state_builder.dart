@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizmaze/game/ui/tutorial/quiz_maze_intro_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/constants.dart';
@@ -77,7 +78,7 @@ class FirstPageStateBuilder extends State<FirstPage> {
                       buttonText: "Demo Mode",
                       fromDestination: Destination.firstPage,
                       toDestination: Destination.quiz,
-                      toDestinationWidget: QuizPage(),
+                      toDestinationWidget: QuizMazeIntroPage(),
                     ),
                   ),
                 ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quizmaze/game/ui/common/viewmodel/game_view_model.dart';
+import 'package:quizmaze/game/ui/tutorial/intro_page.dart';
 
 import 'game/ui/first_screen/widgets/first_page.dart';
 
@@ -28,7 +29,7 @@ class QuizMaze extends StatelessWidget {
             secondary: Color.fromARGB(255, 47, 48, 44),
           ),
         ),
-        home: FirstPage(),
+        home: IntroPage(),
       ),
     );
   }

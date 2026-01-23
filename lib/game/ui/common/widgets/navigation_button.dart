@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizmaze/game/ui/tutorial/intro_page.dart';
 
 import '../../../common/game_mode.dart';
 import '../viewmodel/game_view_model.dart';
@@ -39,7 +40,7 @@ class NavigationButton extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => toDestinationWidget),
                     );
                   }
-                } else if (fromDestination == Destination.quiz) {
+                } else if (fromDestination == Destination.quiz || fromDestination == Destination.introPage || fromDestination == Destination.introPage2) {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => toDestinationWidget),
                   );
