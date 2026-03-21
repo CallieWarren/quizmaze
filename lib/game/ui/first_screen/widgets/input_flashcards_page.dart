@@ -157,7 +157,7 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
                             onPressed: () {
                               String subjectText = _subjectController.text;
                               String prompt =
-                                  '''Can you please create json text about the subject $subjectText with 100 flashcards or less? It should match the following format exactly:
+                                  '''Can you please create json text about the subject $subjectText with 25 flashcards? It should match the following format exactly:
                                 {
                                 "Category": "MLB Locations and Team Names",
                                 "Flashcards": [
