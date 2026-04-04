@@ -169,7 +169,6 @@ class InputFlashcardsStateBuilder extends State<InputFlashcardsPage> {
                       alignLabelWithHint: true,
                       contentPadding: EdgeInsets.all(16),
                     ),
-                    onChanged: (value) => appState.jsonText = value,
                   ),
                   const SizedBox(height: 24),
                   SizedBox(
