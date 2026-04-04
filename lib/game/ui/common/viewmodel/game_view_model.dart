@@ -24,6 +24,8 @@ class GameViewModel extends ChangeNotifier {
     String jsonText = "";
     GameMode gameMode = GameMode.demo;
     bool isContinueAvailable = false;
+    int answersRequiredForSwipe = 1;
+    int _correctAnswersTowardsSwipe = 0;
 
     void setFlashcards(List<Flashcard> flashcards, String category) {
         this.flashcards = flashcards;
@@ -34,7 +36,11 @@ class GameViewModel extends ChangeNotifier {
     bool getNextQuestion(bool isCorrect) {
         if (isCorrect) {
             correct++;
-            swipesAvailable++;
+            _correctAnswersTowardsSwipe++;
+            if (_correctAnswersTowardsSwipe >= answersRequiredForSwipe) {
+                swipesAvailable++;
+                _correctAnswersTowardsSwipe = 0;
+            }
             flashcards[currentFlashCardIndex].isCorrect = true;
         }
         flashcards[currentFlashCardIndex].isQuestionSide = true;
@@ -157,6 +163,12 @@ class GameViewModel extends ChangeNotifier {
 
     void toggleBonusSwipesEnabled() {
         bonusSwipesEnabled = !bonusSwipesEnabled;
+        notifyListeners();
+    }
+
+    void setAnswersRequiredForSwipe(int value) {
+        answersRequiredForSwipe = value;
+        _correctAnswersTowardsSwipe = 0;
         notifyListeners();
     }
 
