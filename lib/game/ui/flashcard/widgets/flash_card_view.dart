@@ -42,7 +42,8 @@ class FlashcardView extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.all(20),
             padding: const EdgeInsets.all(20),
-            child: Center(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
               child: Text(
                 flashCardText,
                 style: flashcardStyle,
