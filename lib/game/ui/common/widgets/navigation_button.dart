@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizmaze/game/ui/tutorial/intro_page.dart';
 
 import '../../../common/game_mode.dart';
 import '../viewmodel/game_view_model.dart';
