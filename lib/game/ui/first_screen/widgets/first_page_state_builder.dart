@@ -75,7 +75,7 @@ class FirstPageStateBuilder extends State<FirstPage> {
                 children: [
                   Expanded(
                     child: NavigationButton(
-                      buttonText: "Demo Mode",
+                      buttonText: "Tutorial",
                       fromDestination: Destination.firstPage,
                       toDestination: Destination.quiz,
                       toDestinationWidget: QuizMazeIntroPage(),
