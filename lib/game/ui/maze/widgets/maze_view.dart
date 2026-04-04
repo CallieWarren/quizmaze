@@ -195,11 +195,11 @@ class MazeView extends StatelessWidget {
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            color: Colors.black,
             width: leadingBorderWidth,
           ),
           trailing: BorderSide(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            color: Colors.black,
             width: trailingBorderWidth,
           ),
         ),
@@ -221,11 +221,11 @@ class MazeView extends StatelessWidget {
       foregroundDecoration: TableSpanDecoration(
         border: TableSpanBorder(
           leading: BorderSide(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            color: Colors.black,
             width: leadingBorderWidth,
           ),
           trailing: BorderSide(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            color: Colors.black,
             width: trailingBorderWidth,
           ),
         ),
