@@ -34,28 +34,41 @@ class NavigationButton extends StatelessWidget {
                       var bonusSwipes = Random().nextInt(3) + 1;
                       mazeState.setBonusSwipes(bonusSwipes);
                     }
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => toDestinationWidget),
+                    Navigator.of(context).pushReplacement(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => toDestinationWidget,
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
                     );
                   }
                 } else if (fromDestination == Destination.quiz || fromDestination == Destination.introPage || fromDestination == Destination.introPage2) {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => toDestinationWidget,
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 } else if (fromDestination == Destination.levelUp) {
                   mazeState.buildNewMazeAfterLevelUp();
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => toDestinationWidget,
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 } else if(fromDestination == Destination.stackComplete) {
                   mazeState.resetFlashcards();
                   Navigator.of(context).pop();
                 } else if (fromDestination == Destination.settings) {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => toDestinationWidget,
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 } else if(fromDestination == Destination.firstPage) {
                   if(buttonText == "Demo Mode") {
@@ -67,7 +80,11 @@ class NavigationButton extends StatelessWidget {
                   }
                   mazeState.clearFlashcards();
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => toDestinationWidget),
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => toDestinationWidget,
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 }
               },
