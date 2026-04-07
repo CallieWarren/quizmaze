@@ -1,4 +1,4 @@
-# quizmaze
+# QuizMaze
 
 QuizMaze is a mobile learning game that turns studying into an interactive adventure. Instead of using traditional flashcards alone, QuizMaze combines quiz-based review with maze exploration to make learning more engaging, rewarding, and fun.
 
